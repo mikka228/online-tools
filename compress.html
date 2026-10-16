@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Compressor — Online Tools</title>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card: #1a1a20;
+      --border: #2a2a32;
+      --text: #f0f0f5;
+      --muted: #a0a0b0;
+      --accent: #22c55e;
+      --accent-hover: #4ade80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+    .back {
+      display: inline-block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .back:hover { color: var(--accent-hover); }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(34, 197, 94, 0.05);
+    }
+    .dropzone p {
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .dropzone strong {
+      color: var(--accent-hover);
+    }
+    input[type="file"] { display: none; }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      margin: 0.5rem 0 1.25rem;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 500px) {
+      .row { grid-template-columns: 1fr; }
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 500px) {
+      .preview-grid { grid-template-columns: 1fr; }
+    }
+    .preview-box {
+      text-align: center;
+    }
+    .preview-box img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .preview-box .info {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #0f0f12;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+    .stats strong { color: var(--accent-hover); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Назад к инструментам</a>
+    <h1>Image Compressor</h1>
+    <p class="subtitle">Сжимай изображения прямо в браузере. Файлы никуда не загружаются.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🖼️</div>
+        <strong>Нажми или перетащи фото сюда</strong>
+        <p>JPG, PNG, WebP · до 20 МБ</p>
+        <input type="file" id="fileInput" accept="image/*" />
+      </div>
+    </div>
+
+    <div class="card" id="settings" style="display: none;">
+      <label for="quality">Качество: <span id="qualityValue">80</span>%</label>
+      <input type="range" id="quality" min="10" max="100" value="80" />
+
+      <div class="row">
+        <div>
+          <label for="maxWidth">Макс. ширина (px)</label>
+          <input type="number" id="maxWidth" value="1920" min="100" max="4000" style="width:100%; background:#121216; border:1px solid var(--border); border-radius:10px; padding:0.75rem 1rem; color:var(--text); font-size:1rem;" />
+        </div>
+        <div>
+          <label for="format">Формат</label>
+          <select id="format" style="width:100%; background:#121216; border:1px solid var(--border); border-radius:10px; padding:0.75rem 1rem; color:var(--text); font-size:1rem;">
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/webp">WebP</option>
+            <option value="image/png">PNG</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" id="compressBtn">Сжать изображение</button>
+    </div>
+
+    <div class="card" id="result" style="display: none;">
+      <div class="preview-grid">
+        <div class="preview-box">
+          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Оригинал</div>
+          <img id="originalPreview" alt="Original" />
+          <div class="info" id="originalInfo"></div>
+        </div>
+        <div class="preview-box">
+          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Сжатое</div>
+          <img id="compressedPreview" alt="Compressed" />
+          <div class="info" id="compressedInfo"></div>
+        </div>
+      </div>
+      <div class="stats">
+        <span>Экономия: <strong id="saved"></strong></span>
+      </div>
+      <button class="btn" id="downloadBtn">Скачать сжатое</button>
+    </div>
+  </div>
+
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const settings = document.getElementById('settings');
+    const qualityEl = document.getElementById('quality');
+    const qualityValue = document.getElementById('qualityValue');
+    const maxWidthEl = document.getElementById('maxWidth');
+    const formatEl = document.getElementById('format');
+    const compressBtn = document.getElementById('compressBtn');
+    const result = document.getElementById('result');
+    const originalPreview = document.getElementById('originalPreview');
+    const compressedPreview = document.getElementById('compressedPreview');
+    const originalInfo = document.getElementById('originalInfo');
+    const compressedInfo = document.getElementById('compressedInfo');
+    const savedEl = document.getElementById('saved');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let originalFile = null;
+    let compressedBlob = null;
+
+    qualityEl.addEventListener('input', () => {
+      qualityValue.textContent = qualityEl.value;
+    });
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) handleFile(fileInput.files[0]);
+    });
+
+    function handleFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Пожалуйста, выбери изображение');
+        return;
+      }
+      originalFile = file;
+      const url = URL.createObjectURL(file);
+      originalPreview.src = url;
+      originalInfo.textContent = `${(file.size / 1024).toFixed(1)} КБ · ${file.type.split('/')[1].toUpperCase()}`;
+      settings.style.display = 'block';
+      result.style.display = 'none';
+    }
+
+    compressBtn.addEventListener('click', async () => {
+      if (!originalFile) return;
+      compressBtn.disabled = true;
+      compressBtn.textContent = 'Сжимаю...';
+
+      try {
+        const img = await loadImage(originalFile);
+        const maxWidth = parseInt(maxWidthEl.value) || 1920;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round(height * maxWidth / width);
+          width = maxWidth;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const quality = parseInt(qualityEl.value) / 100;
+        const mime = formatEl.value;
+
+        canvas.toBlob((blob) => {
+          compressedBlob = blob;
+          const url = URL.createObjectURL(blob);
+          compressedPreview.src = url;
+          compressedInfo.textContent = `${(blob.size / 1024).toFixed(1)} КБ · ${mime.split('/')[1].toUpperCase()}`;
+
+          const saved = ((1 - blob.size / originalFile.size) * 100).toFixed(1);
+          savedEl.textContent = saved > 0 ? `${saved}%` : '0%';
+
+          result.style.display = 'block';
+          compressBtn.disabled = false;
+          compressBtn.textContent = 'Сжать изображение';
+        }, mime, quality);
+      } catch (err) {
+        alert('Ошибка при сжатии');
+        compressBtn.disabled = false;
+        compressBtn.textContent = 'Сжать изображение';
+      }
+    });
+
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+      });
+    }
+
+    downloadBtn.addEventListener('click', () => {
+      if (!compressedBlob) return;
+      const link = document.createElement('a');
+      link.download = `compressed.${formatEl.value.split('/')[1]}`;
+      link.href = URL.createObjectURL(compressedBlob);
+      link.click();
+    });
+  </script>
+</body>
+</html>
