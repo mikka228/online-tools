@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Code Generator — Online Tools</title>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root {
       --bg: #0f0f12;
@@ -92,8 +92,13 @@
       padding: 16px;
       border-radius: 12px;
       line-height: 0;
+      min-height: 200px;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    #qrcode canvas, #qrcode img {
+    #qrcode img {
       display: block;
       max-width: 100%;
     }
@@ -178,7 +183,6 @@
       <div id="qrcode"></div>
       <div class="actions">
         <button class="btn" id="downloadBtn">Скачать PNG</button>
-        <button class="btn btn-secondary" id="copyBtn">Копировать</button>
       </div>
     </div>
   </div>
@@ -191,59 +195,39 @@
     const errorCorrectionEl = document.getElementById('errorCorrection');
     const qrcodeEl = document.getElementById('qrcode');
     const downloadBtn = document.getElementById('downloadBtn');
-    const copyBtn = document.getElementById('copyBtn');
+
+    let qrcode = null;
 
     function generate() {
       const text = textEl.value.trim() || ' ';
+      const size = parseInt(sizeEl.value);
+
       qrcodeEl.innerHTML = '';
-      QRCode.toCanvas(document.createElement('canvas'), text, {
-        width: parseInt(sizeEl.value),
-        color: {
-          dark: colorDarkEl.value,
-          light: colorLightEl.value
-        },
-        errorCorrectionLevel: errorCorrectionEl.value
-      }, function (err, canvas) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        qrcodeEl.appendChild(canvas);
+
+      qrcode = new QRCode(qrcodeEl, {
+        text: text,
+        width: size,
+        height: size,
+        colorDark: colorDarkEl.value,
+        colorLight: colorLightEl.value,
+        correctLevel: QRCode.CorrectLevel[errorCorrectionEl.value]
       });
     }
 
-    // Generate on any change
     [textEl, sizeEl, colorDarkEl, colorLightEl, errorCorrectionEl].forEach(el => {
       el.addEventListener('input', generate);
       el.addEventListener('change', generate);
     });
 
-    // Initial generate
     generate();
 
     downloadBtn.addEventListener('click', () => {
-      const canvas = qrcodeEl.querySelector('canvas');
-      if (!canvas) return;
+      const img = qrcodeEl.querySelector('img');
+      if (!img) return;
       const link = document.createElement('a');
       link.download = 'qrcode.png';
-      link.href = canvas.toDataURL('image/png');
+      link.href = img.src;
       link.click();
-    });
-
-    copyBtn.addEventListener('click', async () => {
-      const canvas = qrcodeEl.querySelector('canvas');
-      if (!canvas) return;
-      canvas.toBlob(async (blob) => {
-        try {
-          await navigator.clipboard.write([
-            new ClipboardItem({ 'image/png': blob })
-          ]);
-          copyBtn.textContent = 'Скопировано!';
-          setTimeout(() => copyBtn.textContent = 'Копировать', 2000);
-        } catch (e) {
-          alert('Не удалось скопировать. Попробуй скачать.');
-        }
-      });
     });
   </script>
 </body>
