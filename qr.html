@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator — Online Tools</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card: #1a1a20;
+      --border: #2a2a32;
+      --text: #f0f0f5;
+      --muted: #a0a0b0;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+    .back {
+      display: inline-block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .back:hover { color: var(--accent-hover); }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: #121216;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    textarea { min-height: 90px; resize: vertical; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 500px) {
+      .row { grid-template-columns: 1fr; }
+    }
+    .preview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    #qrcode {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      line-height: 0;
+    }
+    #qrcode canvas, #qrcode img {
+      display: block;
+      max-width: 100%;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: rgba(99,102,241,0.1);
+    }
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Назад к инструментам</a>
+    <h1>QR Code Generator</h1>
+    <p class="subtitle">Создай QR-код за несколько секунд. Всё работает прямо в браузере.</p>
+
+    <div class="card">
+      <label for="text">Текст или ссылка</label>
+      <textarea id="text" placeholder="https://example.com или любой текст">https://github.com/mikka228/online-tools</textarea>
+
+      <div class="row">
+        <div>
+          <label for="size">Размер (px)</label>
+          <select id="size">
+            <option value="200">200 × 200</option>
+            <option value="256" selected>256 × 256</option>
+            <option value="300">300 × 300</option>
+            <option value="400">400 × 400</option>
+            <option value="512">512 × 512</option>
+          </select>
+        </div>
+        <div>
+          <label for="colorDark">Цвет QR</label>
+          <input type="color" id="colorDark" value="#000000" style="padding: 0.4rem; height: 48px;" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="colorLight">Цвет фона</label>
+          <input type="color" id="colorLight" value="#ffffff" style="padding: 0.4rem; height: 48px;" />
+        </div>
+        <div>
+          <label for="errorCorrection">Уровень коррекции</label>
+          <select id="errorCorrection">
+            <option value="L">Низкий (L)</option>
+            <option value="M" selected>Средний (M)</option>
+            <option value="Q">Высокий (Q)</option>
+            <option value="H">Максимальный (H)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card preview">
+      <div id="qrcode"></div>
+      <div class="actions">
+        <button class="btn" id="downloadBtn">Скачать PNG</button>
+        <button class="btn btn-secondary" id="copyBtn">Копировать</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textEl = document.getElementById('text');
+    const sizeEl = document.getElementById('size');
+    const colorDarkEl = document.getElementById('colorDark');
+    const colorLightEl = document.getElementById('colorLight');
+    const errorCorrectionEl = document.getElementById('errorCorrection');
+    const qrcodeEl = document.getElementById('qrcode');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function generate() {
+      const text = textEl.value.trim() || ' ';
+      qrcodeEl.innerHTML = '';
+      QRCode.toCanvas(document.createElement('canvas'), text, {
+        width: parseInt(sizeEl.value),
+        color: {
+          dark: colorDarkEl.value,
+          light: colorLightEl.value
+        },
+        errorCorrectionLevel: errorCorrectionEl.value
+      }, function (err, canvas) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        qrcodeEl.appendChild(canvas);
+      });
+    }
+
+    // Generate on any change
+    [textEl, sizeEl, colorDarkEl, colorLightEl, errorCorrectionEl].forEach(el => {
+      el.addEventListener('input', generate);
+      el.addEventListener('change', generate);
+    });
+
+    // Initial generate
+    generate();
+
+    downloadBtn.addEventListener('click', () => {
+      const canvas = qrcodeEl.querySelector('canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = 'qrcode.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      const canvas = qrcodeEl.querySelector('canvas');
+      if (!canvas) return;
+      canvas.toBlob(async (blob) => {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]);
+          copyBtn.textContent = 'Скопировано!';
+          setTimeout(() => copyBtn.textContent = 'Копировать', 2000);
+        } catch (e) {
+          alert('Не удалось скопировать. Попробуй скачать.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
