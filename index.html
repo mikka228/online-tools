@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Tools — Бесплатные утилиты в браузере</title>
+  <meta name="description" content="Бесплатные онлайн-инструменты: генератор QR-кодов, сжатие изображений, генератор email-подписей. Всё работает прямо в браузере." />
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --card: #1a1a20;
+      --border: #2a2a32;
+      --text: #f0f0f5;
+      --muted: #a0a0b0;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-hover);
+      font-size: 0.8rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    .card .cta {
+      margin-top: 1.25rem;
+      color: var(--accent-hover);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+    footer a {
+      color: var(--accent-hover);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">100% в браузере · Без регистрации</div>
+      <h1>Online Tools</h1>
+      <p>Бесплатные утилиты, которые работают прямо у тебя в телефоне или компьютере</p>
+    </header>
+
+    <div class="grid">
+      <a href="qr.html" class="card">
+        <div class="card-icon" style="background: rgba(99,102,241,0.15); color: #818cf8;">📱</div>
+        <h2>QR Code Generator</h2>
+        <p>Создавай QR-коды для ссылок, текста, Wi-Fi и визиток. Можно добавить логотип и скачать в PNG.</p>
+        <div class="cta">Открыть →</div>
+      </a>
+
+      <a href="compress.html" class="card">
+        <div class="card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">🖼️</div>
+        <h2>Image Compressor</h2>
+        <p>Сжимай фотографии прямо в браузере. Выбери качество и размер — файлы никуда не загружаются.</p>
+        <div class="cta">Открыть →</div>
+      </a>
+
+      <a href="signature.html" class="card">
+        <div class="card-icon" style="background: rgba(236,72,153,0.15); color: #f472b6;">✉️</div>
+        <h2>Email Signature</h2>
+        <p>Красивая подпись для почты за 30 секунд. Живой предпросмотр и копирование HTML одним кликом.</p>
+        <div class="cta">Открыть →</div>
+      </a>
+    </div>
+
+    <footer>
+      <p>Сделано с ❤️ · <a href="https://github.com/mikka228/online-tools">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
