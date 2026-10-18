@@ -7,13 +7,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root {
-      --bg: #0f0f12;
-      --card: #1a1a20;
-      --border: #2a2a32;
-      --text: #f0f0f5;
-      --muted: #a0a0b0;
-      --accent: #6366f1;
-      --accent-hover: #818cf8;
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #8b5cf6;
+      --accent-hover: #a78bfa;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -24,61 +24,71 @@
       line-height: 1.5;
     }
     .container {
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
       padding: 1.5rem 1.25rem 3rem;
     }
     .back {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       color: var(--muted);
       text-decoration: none;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+      transition: color 0.2s;
     }
     .back:hover { color: var(--accent-hover); }
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
     }
     .subtitle {
       color: var(--muted);
       margin-bottom: 2rem;
+      font-size: 1.05rem;
     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--muted);
       margin-bottom: 0.4rem;
+      font-weight: 500;
     }
     input, select, textarea {
       width: 100%;
-      background: #121216;
+      background: #09090b;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
       color: var(--text);
       font-size: 1rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.15rem;
       outline: none;
+      transition: border-color 0.2s;
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--accent);
     }
-    textarea { min-height: 90px; resize: vertical; }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
       .row { grid-template-columns: 1fr; }
     }
     .preview {
@@ -89,8 +99,8 @@
     }
     #qrcode {
       background: white;
-      padding: 16px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 16px;
       line-height: 0;
       min-height: 200px;
       min-width: 200px;
@@ -101,6 +111,7 @@
     #qrcode img {
       display: block;
       max-width: 100%;
+      border-radius: 4px;
     }
     .btn {
       display: inline-flex;
@@ -110,8 +121,8 @@
       background: var(--accent);
       color: white;
       border: none;
-      border-radius: 10px;
-      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      padding: 0.9rem 1.6rem;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
@@ -125,7 +136,7 @@
     }
     .btn-secondary:hover {
       border-color: var(--accent);
-      background: rgba(99,102,241,0.1);
+      background: rgba(139, 92, 246, 0.1);
     }
     .actions {
       display: flex;
@@ -139,7 +150,7 @@
   <div class="container">
     <a href="index.html" class="back">← Назад к инструментам</a>
     <h1>QR Code Generator</h1>
-    <p class="subtitle">Создай QR-код за несколько секунд. Всё работает прямо в браузере.</p>
+    <p class="subtitle">Создай QR-код за несколько секунд</p>
 
     <div class="card">
       <label for="text">Текст или ссылка</label>
@@ -147,7 +158,7 @@
 
       <div class="row">
         <div>
-          <label for="size">Размер (px)</label>
+          <label for="size">Размер</label>
           <select id="size">
             <option value="200">200 × 200</option>
             <option value="256" selected>256 × 256</option>
@@ -158,17 +169,17 @@
         </div>
         <div>
           <label for="colorDark">Цвет QR</label>
-          <input type="color" id="colorDark" value="#000000" style="padding: 0.4rem; height: 48px;" />
+          <input type="color" id="colorDark" value="#000000" style="padding: 0.35rem; height: 48px;" />
         </div>
       </div>
 
       <div class="row">
         <div>
           <label for="colorLight">Цвет фона</label>
-          <input type="color" id="colorLight" value="#ffffff" style="padding: 0.4rem; height: 48px;" />
+          <input type="color" id="colorLight" value="#ffffff" style="padding: 0.35rem; height: 48px;" />
         </div>
         <div>
-          <label for="errorCorrection">Уровень коррекции</label>
+          <label for="errorCorrection">Коррекция ошибок</label>
           <select id="errorCorrection">
             <option value="L">Низкий (L)</option>
             <option value="M" selected>Средний (M)</option>
@@ -196,15 +207,11 @@
     const qrcodeEl = document.getElementById('qrcode');
     const downloadBtn = document.getElementById('downloadBtn');
 
-    let qrcode = null;
-
     function generate() {
       const text = textEl.value.trim() || ' ';
       const size = parseInt(sizeEl.value);
-
       qrcodeEl.innerHTML = '';
-
-      qrcode = new QRCode(qrcodeEl, {
+      new QRCode(qrcodeEl, {
         text: text,
         width: size,
         height: size,
