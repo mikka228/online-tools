@@ -6,11 +6,11 @@
   <title>Image Compressor — Online Tools</title>
   <style>
     :root {
-      --bg: #0f0f12;
-      --card: #1a1a20;
-      --border: #2a2a32;
-      --text: #f0f0f5;
-      --muted: #a0a0b0;
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
       --accent: #22c55e;
       --accent-hover: #4ade80;
     }
@@ -23,79 +23,116 @@
       line-height: 1.5;
     }
     .container {
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
       padding: 1.5rem 1.25rem 3rem;
     }
     .back {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       color: var(--muted);
       text-decoration: none;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
     .back:hover { color: var(--accent-hover); }
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
     }
     .subtitle {
       color: var(--muted);
       margin-bottom: 2rem;
+      font-size: 1.05rem;
     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     .dropzone {
       border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 2.5rem 1.5rem;
+      border-radius: 14px;
+      padding: 2.75rem 1.5rem;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.2s;
     }
     .dropzone:hover, .dropzone.dragover {
       border-color: var(--accent);
       background: rgba(34, 197, 94, 0.05);
     }
-    .dropzone p {
-      color: var(--muted);
-      margin-top: 0.5rem;
-    }
     .dropzone strong {
       color: var(--accent-hover);
+    }
+    .dropzone p {
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
     }
     input[type="file"] { display: none; }
     label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--muted);
       margin-bottom: 0.4rem;
+      font-weight: 500;
     }
     input[type="range"] {
       width: 100%;
-      margin: 0.5rem 0 1.25rem;
+      margin: 0.5rem 0 1.15rem;
     }
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
       .row { grid-template-columns: 1fr; }
+    }
+    input[type="number"], select {
+      width: 100%;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #09090b;
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     .preview-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 520px) {
       .preview-grid { grid-template-columns: 1fr; }
     }
     .preview-box {
@@ -103,7 +140,7 @@
     }
     .preview-box img {
       max-width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
     }
     .preview-box .info {
@@ -111,48 +148,27 @@
       color: var(--muted);
       margin-top: 0.5rem;
     }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background: var(--accent);
-      color: #0f0f12;
-      border: none;
-      border-radius: 10px;
-      padding: 0.85rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      width: 100%;
-      margin-top: 1rem;
-    }
-    .btn:hover { background: var(--accent-hover); }
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
     .stats {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
+      text-align: center;
+      font-size: 0.95rem;
       color: var(--muted);
-      margin-top: 0.75rem;
+      margin: 1rem 0 0.5rem;
     }
-    .stats strong { color: var(--accent-hover); }
+    .stats strong {
+      color: var(--accent-hover);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back">← Назад к инструментам</a>
     <h1>Image Compressor</h1>
-    <p class="subtitle">Сжимай изображения прямо в браузере. Файлы никуда не загружаются.</p>
+    <p class="subtitle">Сжимай изображения прямо в браузере</p>
 
     <div class="card">
       <div class="dropzone" id="dropzone">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🖼️</div>
-        <strong>Нажми или перетащи фото сюда</strong>
+        <div style="font-size: 2.4rem; margin-bottom: 0.6rem;">🖼️</div>
+        <strong>Нажми или перетащи фото</strong>
         <p>JPG, PNG, WebP · до 20 МБ</p>
         <input type="file" id="fileInput" accept="image/*" />
       </div>
@@ -165,11 +181,11 @@
       <div class="row">
         <div>
           <label for="maxWidth">Макс. ширина (px)</label>
-          <input type="number" id="maxWidth" value="1920" min="100" max="4000" style="width:100%; background:#121216; border:1px solid var(--border); border-radius:10px; padding:0.75rem 1rem; color:var(--text); font-size:1rem;" />
+          <input type="number" id="maxWidth" value="1920" min="100" max="4000" />
         </div>
         <div>
           <label for="format">Формат</label>
-          <select id="format" style="width:100%; background:#121216; border:1px solid var(--border); border-radius:10px; padding:0.75rem 1rem; color:var(--text); font-size:1rem;">
+          <select id="format">
             <option value="image/jpeg">JPEG</option>
             <option value="image/webp">WebP</option>
             <option value="image/png">PNG</option>
@@ -193,9 +209,7 @@
           <div class="info" id="compressedInfo"></div>
         </div>
       </div>
-      <div class="stats">
-        <span>Экономия: <strong id="saved"></strong></span>
-      </div>
+      <div class="stats">Экономия: <strong id="saved"></strong></div>
       <button class="btn" id="downloadBtn">Скачать сжатое</button>
     </div>
   </div>
@@ -245,9 +259,8 @@
         return;
       }
       originalFile = file;
-      const url = URL.createObjectURL(file);
-      originalPreview.src = url;
-      originalInfo.textContent = `${(file.size / 1024).toFixed(1)} КБ · ${file.type.split('/')[1].toUpperCase()}`;
+      originalPreview.src = URL.createObjectURL(file);
+      originalInfo.textContent = `${(file.size / 1024).toFixed(1)} КБ`;
       settings.style.display = 'block';
       result.style.display = 'none';
     }
@@ -279,13 +292,10 @@
 
         canvas.toBlob((blob) => {
           compressedBlob = blob;
-          const url = URL.createObjectURL(blob);
-          compressedPreview.src = url;
-          compressedInfo.textContent = `${(blob.size / 1024).toFixed(1)} КБ · ${mime.split('/')[1].toUpperCase()}`;
-
+          compressedPreview.src = URL.createObjectURL(blob);
+          compressedInfo.textContent = `${(blob.size / 1024).toFixed(1)} КБ`;
           const saved = ((1 - blob.size / originalFile.size) * 100).toFixed(1);
           savedEl.textContent = saved > 0 ? `${saved}%` : '0%';
-
           result.style.display = 'block';
           compressBtn.disabled = false;
           compressBtn.textContent = 'Сжать изображение';
