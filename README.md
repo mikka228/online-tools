@@ -1,31 +1,30 @@
 # Online Tools
 
-Бесплатные онлайн-утилиты, которые работают прямо в браузере.  
-Без регистрации, без загрузки файлов на сервер.
+Free browser-based utilities. No registration. No file uploads.
 
-**Сайт:** [https://mikka228.github.io/online-tools/](https://mikka228.github.io/online-tools/)
+**Live site:** [https://mikka228.github.io/online-tools/](https://mikka228.github.io/online-tools/)
 
-## Инструменты
+## Tools
 
-| Инструмент | Описание |
-|-----------|----------|
-| [QR Code Generator](https://mikka228.github.io/online-tools/qr.html) | Создание QR-кодов с настройкой цвета и размера |
-| [Image Compressor](https://mikka228.github.io/online-tools/compress.html) | Сжатие изображений прямо в браузере |
-| [Email Signature Generator](https://mikka228.github.io/online-tools/signature.html) | Красивые подписи для почты за 30 секунд |
+| Tool | Description |
+|------|-------------|
+| [QR Code Generator](https://mikka228.github.io/online-tools/qr.html) | Create custom QR codes |
+| [Image Compressor](https://mikka228.github.io/online-tools/compress.html) | Compress images in the browser |
+| [Email Signature](https://mikka228.github.io/online-tools/signature.html) | Generate email signatures |
+| [Password Generator](https://mikka228.github.io/online-tools/password.html) | Create strong passwords |
+| [Text Case Converter](https://mikka228.github.io/online-tools/text-case.html) | Change text case |
+| [JPEG to PDF](https://mikka228.github.io/online-tools/jpg-to-pdf.html) | Convert images to PDF |
 
-## Особенности
+## Features
 
-- Всё работает 100% в браузере
-- Файлы никуда не загружаются
-- Адаптивный дизайн (удобно на телефоне)
-- Полностью бесплатно
+- 100% client-side
+- No data leaves your device
+- Mobile-friendly
+- Free to use
 
-## Планы
+## Support
 
-- Добавление новых инструментов
-- Улучшение интерфейса
-- Монетизация через донаты и рекламу
+If you find these tools useful, you can support the project:
 
----
-
-Если сайт оказался полезным — можно поддержать проект ❤️
+- [Boosty](https://boosty.to/mikka2288/donate)
+- USDT (TRC20): `TJCbW7n8xZLoYFQLpN8YcBxaLGd4PNj42U`
