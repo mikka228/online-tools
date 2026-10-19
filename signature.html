@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -129,47 +129,47 @@
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back">← Назад к инструментам</a>
+    <a href="index.html" class="back">← Back to tools</a>
     <h1>Email Signature</h1>
-    <p class="subtitle">Создай красивую подпись для почты за 30 секунд</p>
+    <p class="subtitle">Create a beautiful email signature in 30 seconds</p>
 
     <div class="layout">
       <div class="card">
-        <label for="name">Имя и фамилия</label>
-        <input type="text" id="name" value="Иван Иванов">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" value="John Smith">
 
-        <label for="title">Должность</label>
+        <label for="title">Job Title</label>
         <input type="text" id="title" value="Frontend Developer">
 
-        <label for="company">Компания</label>
+        <label for="company">Company</label>
         <input type="text" id="company" value="My Company">
 
-        <label for="phone">Телефон</label>
-        <input type="text" id="phone" value="+7 999 123-45-67">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" value="+1 555 123-4567">
 
         <label for="email">Email</label>
-        <input type="email" id="email" value="ivan@example.com">
+        <input type="email" id="email" value="john@example.com">
 
-        <label for="website">Сайт</label>
+        <label for="website">Website</label>
         <input type="url" id="website" value="https://example.com">
 
-        <label for="color">Цвет акцента</label>
+        <label for="color">Accent Color</label>
         <input type="color" id="color" value="#ec4899" style="padding: 0.3rem; height: 46px;">
       </div>
 
       <div class="card">
-        <div class="preview-title">Предпросмотр</div>
+        <div class="preview-title">Preview</div>
         <div id="preview"></div>
 
-        <button class="btn" id="copyBtn">Скопировать HTML</button>
-        <button class="btn btn-secondary" id="copyTextBtn">Скопировать как текст</button>
+        <button class="btn" id="copyBtn">Copy HTML</button>
+        <button class="btn btn-secondary" id="copyTextBtn">Copy as Text</button>
       </div>
     </div>
   </div>
 
   <script>
     function updatePreview() {
-      var name = document.getElementById('name').value || 'Имя';
+      var name = document.getElementById('name').value || 'Name';
       var title = document.getElementById('title').value;
       var company = document.getElementById('company').value;
       var phone = document.getElementById('phone').value;
@@ -205,8 +205,8 @@
       var html = document.getElementById('preview').innerHTML;
       navigator.clipboard.writeText(html).then(function() {
         var btn = document.getElementById('copyBtn');
-        btn.textContent = 'Скопировано!';
-        setTimeout(function() { btn.textContent = 'Скопировать HTML'; }, 2000);
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = 'Copy HTML'; }, 2000);
       });
     });
 
@@ -214,8 +214,8 @@
       var text = document.getElementById('preview').innerText;
       navigator.clipboard.writeText(text).then(function() {
         var btn = document.getElementById('copyTextBtn');
-        btn.textContent = 'Скопировано!';
-        setTimeout(function() { btn.textContent = 'Скопировать как текст'; }, 2000);
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = 'Copy as Text'; }, 2000);
       });
     });
   </script>
