@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Конвертер регистра текста — Online Tools</title>
+  <title>Text Case Converter — Online Tools</title>
   <style>
     :root {
-      --bg: #0f0f12;
-      --card: #1a1a20;
-      --border: #2a2a32;
-      --text: #f0f0f5;
-      --muted: #a0a0b0;
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
       --accent: #06b6d4;
       --accent-hover: #22d3ee;
     }
@@ -28,44 +28,49 @@
       padding: 1.5rem 1.25rem 3rem;
     }
     .back {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       color: var(--muted);
       text-decoration: none;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
     .back:hover { color: var(--accent-hover); }
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
     }
     .subtitle {
       color: var(--muted);
       margin-bottom: 2rem;
+      font-size: 1.05rem;
     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--muted);
       margin-bottom: 0.4rem;
+      font-weight: 500;
     }
     textarea {
       width: 100%;
-      background: #121216;
+      background: #09090b;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0.9rem 1rem;
       color: var(--text);
       font-size: 1rem;
-      min-height: 140px;
+      min-height: 130px;
       resize: vertical;
       outline: none;
       margin-bottom: 1rem;
@@ -76,16 +81,16 @@
     .buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
+      gap: 0.7rem;
     }
     @media (max-width: 500px) {
       .buttons { grid-template-columns: 1fr; }
     }
     .btn {
-      background: #121216;
+      background: #09090b;
       border: 1px solid var(--border);
       color: var(--text);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0.75rem 1rem;
       font-size: 0.95rem;
       cursor: pointer;
@@ -98,42 +103,40 @@
     .btn-primary {
       background: var(--accent);
       border-color: var(--accent);
-      color: #0f0f12;
+      color: #09090b;
       font-weight: 600;
       grid-column: 1 / -1;
+      margin-top: 0.5rem;
     }
     .btn-primary:hover {
       background: var(--accent-hover);
-    }
-    .result-label {
-      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back">← Назад к инструментам</a>
-    <h1>Конвертер регистра</h1>
-    <p class="subtitle">Быстро меняй регистр текста одним нажатием</p>
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Text Case Converter</h1>
+    <p class="subtitle">Change text case with one click</p>
 
     <div class="card">
-      <label for="input">Исходный текст</label>
-      <textarea id="input" placeholder="Вставь сюда текст...">Пример текста для конвертации</textarea>
+      <label for="input">Original text</label>
+      <textarea id="input" placeholder="Paste your text here...">Example text for conversion</textarea>
 
       <div class="buttons">
-        <button class="btn" onclick="convert('upper')">ВЕРХНИЙ РЕГИСТР</button>
-        <button class="btn" onclick="convert('lower')">нижний регистр</button>
-        <button class="btn" onclick="convert('title')">Как В Заголовке</button>
-        <button class="btn" onclick="convert('sentence')">Как в предложении</button>
-        <button class="btn" onclick="convert('toggle')">иНВЕРСИЯ рЕГИСТРА</button>
-        <button class="btn" onclick="convert('capitalize')">Каждое Слово С Большой</button>
+        <button class="btn" onclick="convert('upper')">UPPERCASE</button>
+        <button class="btn" onclick="convert('lower')">lowercase</button>
+        <button class="btn" onclick="convert('title')">Title Case</button>
+        <button class="btn" onclick="convert('sentence')">Sentence case</button>
+        <button class="btn" onclick="convert('toggle')">tOGGLE cASE</button>
+        <button class="btn" onclick="convert('capitalize')">Capitalize Each Word</button>
       </div>
     </div>
 
     <div class="card">
-      <label class="result-label">Результат</label>
-      <textarea id="output" readonly placeholder="Здесь появится результат"></textarea>
-      <button class="btn btn-primary" id="copyBtn">Скопировать результат</button>
+      <label>Result</label>
+      <textarea id="output" readonly placeholder="Result will appear here"></textarea>
+      <button class="btn btn-primary" id="copyBtn">Copy Result</button>
     </div>
   </div>
 
@@ -172,14 +175,13 @@
       output.value = result;
     }
 
-    // Автоматически конвертируем при загрузке
     convert('title');
 
     copyBtn.addEventListener('click', () => {
       if (!output.value) return;
       navigator.clipboard.writeText(output.value).then(() => {
-        copyBtn.textContent = 'Скопировано!';
-        setTimeout(() => copyBtn.textContent = 'Скопировать результат', 2000);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy Result', 2000);
       });
     });
   </script>
