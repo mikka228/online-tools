@@ -69,7 +69,7 @@
       margin-bottom: 0.35rem;
       font-weight: 500;
     }
-    input, select {
+    input {
       width: 100%;
       background: #09090b;
       border: 1px solid var(--border);
@@ -79,7 +79,6 @@
       font-size: 0.95rem;
       margin-bottom: 1rem;
       outline: none;
-      transition: border-color 0.2s;
     }
     input:focus {
       border-color: var(--accent);
@@ -114,7 +113,6 @@
       cursor: pointer;
       width: 100%;
       margin-top: 1rem;
-      transition: background 0.2s;
     }
     .btn:hover { background: var(--accent-hover); }
     .btn-secondary {
@@ -138,25 +136,25 @@
     <div class="layout">
       <div class="card">
         <label for="name">Имя и фамилия</label>
-        <input type="text" id="name" value="Иван Иванов" />
+        <input type="text" id="name" value="Иван Иванов">
 
         <label for="title">Должность</label>
-        <input type="text" id="title" value="Frontend Developer" />
+        <input type="text" id="title" value="Frontend Developer">
 
         <label for="company">Компания</label>
-        <input type="text" id="company" value="My Company" />
+        <input type="text" id="company" value="My Company">
 
         <label for="phone">Телефон</label>
-        <input type="text" id="phone" value="+7 999 123-45-67" />
+        <input type="text" id="phone" value="+7 999 123-45-67">
 
         <label for="email">Email</label>
-        <input type="email" id="email" value="ivan@example.com" />
+        <input type="email" id="email" value="ivan@example.com">
 
         <label for="website">Сайт</label>
-        <input type="url" id="website" value="https://example.com" />
+        <input type="url" id="website" value="https://example.com">
 
         <label for="color">Цвет акцента</label>
-        <input type="color" id="color" value="#ec4899" style="padding: 0.3rem; height: 46px;" />
+        <input type="color" id="color" value="#ec4899" style="padding: 0.3rem; height: 46px;">
       </div>
 
       <div class="card">
@@ -170,56 +168,54 @@
   </div>
 
   <script>
-    const fields = ['name', 'title', 'company', 'phone', 'email', 'website', 'color'];
-    const preview = document.getElementById('preview');
-    const copyBtn = document.getElementById('copyBtn');
-    const copyTextBtn = document.getElementById('copyTextBtn');
-
     function updatePreview() {
-      const name = document.getElementById('name').value || 'Имя';
-      const title = document.getElementById('title').value;
-      const company = document.getElementById('company').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const website = document.getElementById('website').value;
-      const color = document.getElementById('color').value;
+      var name = document.getElementById('name').value || 'Имя';
+      var title = document.getElementById('title').value;
+      var company = document.getElementById('company').value;
+      var phone = document.getElementById('phone').value;
+      var email = document.getElementById('email').value;
+      var website = document.getElementById('website').value;
+      var color = document.getElementById('color').value;
 
-      let html = `
-        <table cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #333;">
-          <tr>
-            <td style="padding-right: 16px; border-right: 3px solid ${color};">
-              <div style="font-size: 18px; font-weight: bold; color: #111;">${name}</div>
-              \( {title ? `<div style="color: #555; margin-top: 2px;"> \){title}</div>` : ''}
-              \( {company ? `<div style="color: #777; margin-top: 2px;"> \){company}</div>` : ''}
-            </td>
-            <td style="padding-left: 16px;">
-              \( {phone ? `<div style="margin-bottom: 4px;">📞 <a href="tel: \){phone.replace(/\s/g,'')}" style="color: #333; text-decoration: none;">${phone}</a></div>` : ''}
-              \( {email ? `<div style="margin-bottom: 4px;">✉️ <a href="mailto: \){email}" style="color: #333; text-decoration: none;">${email}</a></div>` : ''}
-              \( {website ? `<div>🌐 <a href=" \){website}" style="color: \( {color}; text-decoration: none;"> \){website.replace(/^https?:\/\//, '')}</a></div>` : ''}
-            </td>
-          </tr>
-        </table>
-      `;
-      preview.innerHTML = html;
+      var html = '<table cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #333;">';
+      html += '<tr><td style="padding-right: 16px; border-right: 3px solid ' + color + ';">';
+      html += '<div style="font-size: 18px; font-weight: bold; color: #111;">' + name + '</div>';
+      if (title) html += '<div style="color: #555; margin-top: 2px;">' + title + '</div>';
+      if (company) html += '<div style="color: #777; margin-top: 2px;">' + company + '</div>';
+      html += '</td><td style="padding-left: 16px;">';
+      if (phone) html += '<div style="margin-bottom: 4px;">📞 <a href="tel:' + phone.replace(/\s/g,'') + '" style="color: #333; text-decoration: none;">' + phone + '</a></div>';
+      if (email) html += '<div style="margin-bottom: 4px;">✉️ <a href="mailto:' + email + '" style="color: #333; text-decoration: none;">' + email + '</a></div>';
+      if (website) {
+        var siteName = website.replace(/^https?:\/\//, '');
+        html += '<div>🌐 <a href="' + website + '" style="color: ' + color + '; text-decoration: none;">' + siteName + '</a></div>';
+      }
+      html += '</td></tr></table>';
+
+      document.getElementById('preview').innerHTML = html;
     }
 
-    fields.forEach(id => {
-      document.getElementById(id).addEventListener('input', updatePreview);
-    });
+    var fields = ['name', 'title', 'company', 'phone', 'email', 'website', 'color'];
+    for (var i = 0; i < fields.length; i++) {
+      document.getElementById(fields[i]).addEventListener('input', updatePreview);
+    }
 
     updatePreview();
 
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(preview.innerHTML).then(() => {
-        copyBtn.textContent = 'Скопировано!';
-        setTimeout(() => copyBtn.textContent = 'Скопировать HTML', 2000);
+    document.getElementById('copyBtn').addEventListener('click', function() {
+      var html = document.getElementById('preview').innerHTML;
+      navigator.clipboard.writeText(html).then(function() {
+        var btn = document.getElementById('copyBtn');
+        btn.textContent = 'Скопировано!';
+        setTimeout(function() { btn.textContent = 'Скопировать HTML'; }, 2000);
       });
     });
 
-    copyTextBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(preview.innerText).then(() => {
-        copyTextBtn.textContent = 'Скопировано!';
-        setTimeout(() => copyTextBtn.textContent = 'Скопировать как текст', 2000);
+    document.getElementById('copyTextBtn').addEventListener('click', function() {
+      var text = document.getElementById('preview').innerText;
+      navigator.clipboard.writeText(text).then(function() {
+        var btn = document.getElementById('copyTextBtn');
+        btn.textContent = 'Скопировано!';
+        setTimeout(function() { btn.textContent = 'Скопировать как текст'; }, 2000);
       });
     });
   </script>
