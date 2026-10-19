@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,7 +36,6 @@
       text-decoration: none;
       font-size: 0.9rem;
       margin-bottom: 1.75rem;
-      transition: color 0.2s;
     }
     .back:hover { color: var(--accent-hover); }
     h1 {
@@ -74,7 +73,6 @@
       font-size: 1rem;
       margin-bottom: 1.15rem;
       outline: none;
-      transition: border-color 0.2s;
     }
     input:focus, select:focus, textarea:focus {
       border-color: var(--accent);
@@ -111,13 +109,11 @@
     #qrcode img {
       display: block;
       max-width: 100%;
-      border-radius: 4px;
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
       background: var(--accent);
       color: white;
       border: none;
@@ -126,39 +122,23 @@
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
     }
     .btn:hover { background: var(--accent-hover); }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      background: rgba(139, 92, 246, 0.1);
-    }
-    .actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back">← Назад к инструментам</a>
+    <a href="index.html" class="back">← Back to tools</a>
     <h1>QR Code Generator</h1>
-    <p class="subtitle">Создай QR-код за несколько секунд</p>
+    <p class="subtitle">Create a QR code in seconds</p>
 
     <div class="card">
-      <label for="text">Текст или ссылка</label>
-      <textarea id="text" placeholder="https://example.com или любой текст">https://github.com/mikka228/online-tools</textarea>
+      <label for="text">Text or URL</label>
+      <textarea id="text" placeholder="https://example.com or any text">https://github.com/mikka228/online-tools</textarea>
 
       <div class="row">
         <div>
-          <label for="size">Размер</label>
+          <label for="size">Size</label>
           <select id="size">
             <option value="200">200 × 200</option>
             <option value="256" selected>256 × 256</option>
@@ -168,23 +148,23 @@
           </select>
         </div>
         <div>
-          <label for="colorDark">Цвет QR</label>
+          <label for="colorDark">QR Color</label>
           <input type="color" id="colorDark" value="#000000" style="padding: 0.35rem; height: 48px;" />
         </div>
       </div>
 
       <div class="row">
         <div>
-          <label for="colorLight">Цвет фона</label>
+          <label for="colorLight">Background</label>
           <input type="color" id="colorLight" value="#ffffff" style="padding: 0.35rem; height: 48px;" />
         </div>
         <div>
-          <label for="errorCorrection">Коррекция ошибок</label>
+          <label for="errorCorrection">Error Correction</label>
           <select id="errorCorrection">
-            <option value="L">Низкий (L)</option>
-            <option value="M" selected>Средний (M)</option>
-            <option value="Q">Высокий (Q)</option>
-            <option value="H">Максимальный (H)</option>
+            <option value="L">Low (L)</option>
+            <option value="M" selected>Medium (M)</option>
+            <option value="Q">Quartile (Q)</option>
+            <option value="H">High (H)</option>
           </select>
         </div>
       </div>
@@ -192,9 +172,7 @@
 
     <div class="card preview">
       <div id="qrcode"></div>
-      <div class="actions">
-        <button class="btn" id="downloadBtn">Скачать PNG</button>
-      </div>
+      <button class="btn" id="downloadBtn">Download PNG</button>
     </div>
   </div>
 
