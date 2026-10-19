@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -67,9 +67,7 @@
       border-color: var(--accent);
       background: rgba(34, 197, 94, 0.05);
     }
-    .dropzone strong {
-      color: var(--accent-hover);
-    }
+    .dropzone strong { color: var(--accent-hover); }
     .dropzone p {
       color: var(--muted);
       margin-top: 0.4rem;
@@ -119,7 +117,6 @@
       cursor: pointer;
       width: 100%;
       margin-top: 0.5rem;
-      transition: background 0.2s;
     }
     .btn:hover { background: var(--accent-hover); }
     .btn:disabled {
@@ -135,9 +132,7 @@
     @media (max-width: 520px) {
       .preview-grid { grid-template-columns: 1fr; }
     }
-    .preview-box {
-      text-align: center;
-    }
+    .preview-box { text-align: center; }
     .preview-box img {
       max-width: 100%;
       border-radius: 12px;
@@ -154,37 +149,35 @@
       color: var(--muted);
       margin: 1rem 0 0.5rem;
     }
-    .stats strong {
-      color: var(--accent-hover);
-    }
+    .stats strong { color: var(--accent-hover); }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back">← Назад к инструментам</a>
+    <a href="index.html" class="back">← Back to tools</a>
     <h1>Image Compressor</h1>
-    <p class="subtitle">Сжимай изображения прямо в браузере</p>
+    <p class="subtitle">Compress images directly in your browser</p>
 
     <div class="card">
       <div class="dropzone" id="dropzone">
         <div style="font-size: 2.4rem; margin-bottom: 0.6rem;">🖼️</div>
-        <strong>Нажми или перетащи фото</strong>
-        <p>JPG, PNG, WebP · до 20 МБ</p>
+        <strong>Click or drop an image</strong>
+        <p>JPG, PNG, WebP · up to 20 MB</p>
         <input type="file" id="fileInput" accept="image/*" />
       </div>
     </div>
 
     <div class="card" id="settings" style="display: none;">
-      <label for="quality">Качество: <span id="qualityValue">80</span>%</label>
+      <label for="quality">Quality: <span id="qualityValue">80</span>%</label>
       <input type="range" id="quality" min="10" max="100" value="80" />
 
       <div class="row">
         <div>
-          <label for="maxWidth">Макс. ширина (px)</label>
+          <label for="maxWidth">Max width (px)</label>
           <input type="number" id="maxWidth" value="1920" min="100" max="4000" />
         </div>
         <div>
-          <label for="format">Формат</label>
+          <label for="format">Format</label>
           <select id="format">
             <option value="image/jpeg">JPEG</option>
             <option value="image/webp">WebP</option>
@@ -193,24 +186,24 @@
         </div>
       </div>
 
-      <button class="btn" id="compressBtn">Сжать изображение</button>
+      <button class="btn" id="compressBtn">Compress Image</button>
     </div>
 
     <div class="card" id="result" style="display: none;">
       <div class="preview-grid">
         <div class="preview-box">
-          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Оригинал</div>
+          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Original</div>
           <img id="originalPreview" alt="Original" />
           <div class="info" id="originalInfo"></div>
         </div>
         <div class="preview-box">
-          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Сжатое</div>
+          <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem;">Compressed</div>
           <img id="compressedPreview" alt="Compressed" />
           <div class="info" id="compressedInfo"></div>
         </div>
       </div>
-      <div class="stats">Экономия: <strong id="saved"></strong></div>
-      <button class="btn" id="downloadBtn">Скачать сжатое</button>
+      <div class="stats">Saved: <strong id="saved"></strong></div>
+      <button class="btn" id="downloadBtn">Download Compressed</button>
     </div>
   </div>
 
@@ -255,12 +248,12 @@
 
     function handleFile(file) {
       if (!file.type.startsWith('image/')) {
-        alert('Пожалуйста, выбери изображение');
+        alert('Please select an image');
         return;
       }
       originalFile = file;
       originalPreview.src = URL.createObjectURL(file);
-      originalInfo.textContent = `${(file.size / 1024).toFixed(1)} КБ`;
+      originalInfo.textContent = `${(file.size / 1024).toFixed(1)} KB`;
       settings.style.display = 'block';
       result.style.display = 'none';
     }
@@ -268,7 +261,7 @@
     compressBtn.addEventListener('click', async () => {
       if (!originalFile) return;
       compressBtn.disabled = true;
-      compressBtn.textContent = 'Сжимаю...';
+      compressBtn.textContent = 'Compressing...';
 
       try {
         const img = await loadImage(originalFile);
@@ -293,17 +286,17 @@
         canvas.toBlob((blob) => {
           compressedBlob = blob;
           compressedPreview.src = URL.createObjectURL(blob);
-          compressedInfo.textContent = `${(blob.size / 1024).toFixed(1)} КБ`;
+          compressedInfo.textContent = `${(blob.size / 1024).toFixed(1)} KB`;
           const saved = ((1 - blob.size / originalFile.size) * 100).toFixed(1);
           savedEl.textContent = saved > 0 ? `${saved}%` : '0%';
           result.style.display = 'block';
           compressBtn.disabled = false;
-          compressBtn.textContent = 'Сжать изображение';
+          compressBtn.textContent = 'Compress Image';
         }, mime, quality);
       } catch (err) {
-        alert('Ошибка при сжатии');
+        alert('Compression error');
         compressBtn.disabled = false;
-        compressBtn.textContent = 'Сжать изображение';
+        compressBtn.textContent = 'Compress Image';
       }
     });
 
