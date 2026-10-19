@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JPEG в PDF — Online Tools</title>
+  <title>JPEG to PDF — Online Tools</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     :root {
-      --bg: #0f0f12;
-      --card: #1a1a20;
-      --border: #2a2a32;
-      --text: #f0f0f5;
-      --muted: #a0a0b0;
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
       --accent: #f97316;
       --accent-hover: #fb923c;
     }
@@ -29,47 +29,50 @@
       padding: 1.5rem 1.25rem 3rem;
     }
     .back {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       color: var(--muted);
       text-decoration: none;
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
     .back:hover { color: var(--accent-hover); }
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
     }
     .subtitle {
       color: var(--muted);
       margin-bottom: 2rem;
+      font-size: 1.05rem;
     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     .dropzone {
       border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 2.5rem 1.5rem;
+      border-radius: 14px;
+      padding: 2.75rem 1.5rem;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.2s;
     }
     .dropzone:hover, .dropzone.dragover {
       border-color: var(--accent);
       background: rgba(249, 115, 22, 0.05);
     }
+    .dropzone strong { color: var(--accent-hover); }
     .dropzone p {
       color: var(--muted);
-      margin-top: 0.5rem;
-    }
-    .dropzone strong {
-      color: var(--accent-hover);
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
     }
     input[type="file"] { display: none; }
     .preview {
@@ -82,7 +85,7 @@
       position: relative;
       width: 90px;
       height: 90px;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border);
     }
@@ -111,16 +114,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
       background: var(--accent);
-      color: #0f0f12;
+      color: #09090b;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 0.9rem 1.5rem;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
       width: 100%;
       margin-top: 1rem;
     }
@@ -139,21 +140,21 @@
 </head>
 <body>
   <div class="container">
-    <a href="index.html" class="back">← Назад к инструментам</a>
-    <h1>JPEG → PDF</h1>
-    <p class="subtitle">Конвертируй изображения в PDF прямо в браузере</p>
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>JPEG to PDF</h1>
+    <p class="subtitle">Convert images to PDF right in your browser</p>
 
     <div class="card">
       <div class="dropzone" id="dropzone">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📄</div>
-        <strong>Нажми или перетащи фото сюда</strong>
-        <p>JPG, PNG, WebP · можно несколько файлов</p>
+        <div style="font-size: 2.4rem; margin-bottom: 0.6rem;">📄</div>
+        <strong>Click or drop images here</strong>
+        <p>JPG, PNG, WebP · multiple files supported</p>
         <input type="file" id="fileInput" accept="image/*" multiple />
       </div>
 
       <div class="preview" id="preview"></div>
 
-      <button class="btn" id="convertBtn" disabled>Создать PDF</button>
+      <button class="btn" id="convertBtn" disabled>Create PDF</button>
       <p class="info" id="info"></p>
     </div>
   </div>
@@ -188,7 +189,7 @@
       }
       renderPreview();
       convertBtn.disabled = files.length === 0;
-      info.textContent = files.length ? `Выбрано файлов: ${files.length}` : '';
+      info.textContent = files.length ? `Selected files: ${files.length}` : '';
     }
 
     function renderPreview() {
@@ -206,7 +207,7 @@
           files.splice(index, 1);
           renderPreview();
           convertBtn.disabled = files.length === 0;
-          info.textContent = files.length ? `Выбрано файлов: ${files.length}` : '';
+          info.textContent = files.length ? `Selected files: ${files.length}` : '';
         };
         div.appendChild(img);
         div.appendChild(btn);
@@ -217,7 +218,7 @@
     convertBtn.addEventListener('click', async () => {
       if (files.length === 0) return;
       convertBtn.disabled = true;
-      convertBtn.textContent = 'Создаю PDF...';
+      convertBtn.textContent = 'Creating PDF...';
 
       try {
         const pdf = new jsPDF();
@@ -245,11 +246,11 @@
         }
 
         pdf.save('images.pdf');
-        convertBtn.textContent = 'Создать PDF';
+        convertBtn.textContent = 'Create PDF';
         convertBtn.disabled = false;
       } catch (err) {
-        alert('Ошибка при создании PDF');
-        convertBtn.textContent = 'Создать PDF';
+        alert('Error creating PDF');
+        convertBtn.textContent = 'Create PDF';
         convertBtn.disabled = false;
       }
     });
