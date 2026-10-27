@@ -2,7 +2,7 @@
 
 Free browser-based utilities. No registration. No file uploads.
 
-**Live site:** [https://mikka228.github.io/online-tools/](https://mikka228.github.io/online-tools/)
+**Live site:** https://mikka228.github.io/online-tools/
 
 ## Tools
 
@@ -14,6 +14,7 @@ Free browser-based utilities. No registration. No file uploads.
 | [Password Generator](https://mikka228.github.io/online-tools/password.html) | Create strong passwords |
 | [Text Case Converter](https://mikka228.github.io/online-tools/text-case.html) | Change text case |
 | [JPEG to PDF](https://mikka228.github.io/online-tools/jpg-to-pdf.html) | Convert images to PDF |
+| [JSON Formatter](https://mikka228.github.io/online-tools/json.html) | Format, minify and validate JSON |
 
 ## Features
 
@@ -23,8 +24,6 @@ Free browser-based utilities. No registration. No file uploads.
 - Free to use
 
 ## Support
-
-If you find these tools useful, you can support the project:
 
 - [Boosty](https://boosty.to/mikka2288/donate)
 - USDT (TRC20): `TJCbW7n8xZLoYFQLpN8YcBxaLGd4PNj42U`
