@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unix Timestamp Converter — Online Tools</title>
+  <meta name="description" content="Convert Unix timestamps to dates and back. Free, works in your browser." />
+  <style>
+    :root {
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #38bdf8;
+      --accent-hover: #7dd3fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+    .back {
+      display: inline-flex;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .back:hover { color: var(--accent-hover); }
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 0.9rem;
+    }
+    input:focus { border-color: var(--accent); }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (max-width: 520px) {
+      .row { grid-template-columns: 1fr; }
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.3rem;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #09090b;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .result {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.95rem;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      word-break: break-all;
+      min-height: 48px;
+    }
+    .hint {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to tools</a>
+    <h1>Unix Timestamp</h1>
+    <p class="subtitle">Convert timestamps to dates and back</p>
+
+    <div class="card">
+      <label for="timestamp">Unix timestamp</label>
+      <input id="timestamp" type="text" placeholder="1700000000" />
+
+      <div class="actions">
+        <button class="btn" id="toDateBtn">To date</button>
+        <button class="btn btn-secondary" id="nowBtn">Use now</button>
+        <button class="btn btn-secondary" id="copyDateBtn">Copy date</button>
+      </div>
+
+      <p class="hint">Supports seconds and milliseconds</p>
+      <div class="result" id="dateResult">—</div>
+    </div>
+
+    <div class="card">
+      <label>Date & time</label>
+      <div class="row">
+        <div>
+          <label for="dateInput">Date</label>
+          <input id="dateInput" type="date" />
+        </div>
+        <div>
+          <label for="timeInput">Time</label>
+          <input id="timeInput" type="time" step="1" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="toTsBtn">To timestamp</button>
+        <button class="btn btn-secondary" id="copyTsBtn">Copy timestamp</button>
+      </div>
+
+      <div class="result" id="tsResult" style="margin-top:0.9rem">—</div>
+    </div>
+  </div>
+
+  <script>
+    const timestamp = document.getElementById('timestamp');
+    const dateResult = document.getElementById('dateResult');
+    const dateInput = document.getElementById('dateInput');
+    const timeInput = document.getElementById('timeInput');
+    const tsResult = document.getElementById('tsResult');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function formatDate(d) {
+      return d.getFullYear() + '-' +
+        pad(d.getMonth() + 1) + '-' +
+        pad(d.getDate()) + ' ' +
+        pad(d.getHours()) + ':' +
+        pad(d.getMinutes()) + ':' +
+        pad(d.getSeconds());
+    }
+
+    function parseTimestamp(value) {
+      const n = Number(String(value).trim());
+      if (!Number.isFinite(n)) return null;
+      const ms = Math.abs(n) >= 1e12 ? n : n * 1000;
+      const d = new Date(ms);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    document.getElementById('toDateBtn').onclick = () => {
+      const d = parseTimestamp(timestamp.value);
+      if (!d) {
+        dateResult.textContent = 'Invalid timestamp';
+        return;
+      }
+      dateResult.textContent = formatDate(d) + ' (local)';
+    };
+
+    document.getElementById('nowBtn').onclick = () => {
+      const now = Math.floor(Date.now() / 1000);
+      timestamp.value = String(now);
+      dateResult.textContent = formatDate(new Date()) + ' (local)';
+    };
+
+    document.getElementById('copyDateBtn').onclick = async () => {
+      const text = dateResult.textContent;
+      if (!text || text === '—') return;
+      await navigator.clipboard.writeText(text);
+    };
+
+    document.getElementById('toTsBtn').onclick = () => {
+      if (!dateInput.value) {
+        tsResult.textContent = 'Pick a date';
+        return;
+      }
+      const time = timeInput.value || '00:00:00';
+      const d = new Date(dateInput.value + 'T' + time);
+      if (isNaN(d.getTime())) {
+        tsResult.textContent = 'Invalid date';
+        return;
+      }
+      tsResult.textContent = String(Math.floor(d.getTime() / 1000));
+    };
+
+    document.getElementById('copyTsBtn').onclick = async () => {
+      const text = tsResult.textContent;
+      if (!text || text === '—') return;
+      await navigator.clipboard.writeText(text);
+    };
+
+    document.getElementById('nowBtn').click();
+    const now = new Date();
+    dateInput.value = now.toISOString().slice(0, 10);
+    timeInput.value = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+  </script>
+</body>
+</html>
