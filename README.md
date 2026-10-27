@@ -15,6 +15,7 @@ Free browser-based utilities. No registration. No file uploads.
 | [Text Case Converter](https://mikka228.github.io/online-tools/text-case.html) | Change text case |
 | [JPEG to PDF](https://mikka228.github.io/online-tools/jpg-to-pdf.html) | Convert images to PDF |
 | [JSON Formatter](https://mikka228.github.io/online-tools/json.html) | Format, minify and validate JSON |
+| [Unix Timestamp](https://mikka228.github.io/online-tools/timestamp.html) | Convert timestamps to dates and back |
 
 ## Features
 
