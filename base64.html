@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base64 Encoder Decoder — Free Online Tool</title>
+  <meta name="description" content="Encode and decode Base64 online. Free browser tool, no signup, no data uploaded to a server." />
+  <style>
+    :root {
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #f59e0b;
+      --accent-hover: #fbbf24;
+      --danger: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.35rem; }
+    .subtitle { color: var(--muted); margin-bottom: 1.5rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+      font-weight: 500;
+    }
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      resize: vertical;
+      outline: none;
+    }
+    textarea:focus { border-color: var(--accent); }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #09090b;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .status { min-height: 1.3rem; margin-top: 0.7rem; font-size: 0.9rem; color: var(--muted); }
+    .status.err { color: var(--danger); }
+    .status.ok { color: #4ade80; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to tools</a>
+    <h1>Base64 Encode / Decode</h1>
+    <p class="subtitle">Convert text to Base64 and back in your browser</p>
+
+    <div class="card">
+      <label for="input">Input</label>
+      <textarea id="input" placeholder="Type or paste text here"></textarea>
+      <div class="actions">
+        <button class="btn" id="encodeBtn">Encode</button>
+        <button class="btn btn-secondary" id="decodeBtn">Decode</button>
+        <button class="btn btn-secondary" id="swapBtn">Swap</button>
+        <button class="btn btn-secondary" id="copyBtn">Copy result</button>
+        <button class="btn btn-secondary" id="clearBtn">Clear</button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+
+    <div class="card">
+      <label for="output">Result</label>
+      <textarea id="output" readonly placeholder="Result will appear here"></textarea>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const status = document.getElementById('status');
+
+    function setStatus(text, type) {
+      status.textContent = text || '';
+      status.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    function toBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function fromBase64(str) {
+      return decodeURIComponent(escape(atob(str)));
+    }
+
+    document.getElementById('encodeBtn').onclick = () => {
+      try {
+        output.value = toBase64(input.value);
+        setStatus('Encoded', 'ok');
+      } catch (e) {
+        setStatus('Encode failed', 'err');
+      }
+    };
+
+    document.getElementById('decodeBtn').onclick = () => {
+      try {
+        output.value = fromBase64(input.value.trim());
+        setStatus('Decoded', 'ok');
+      } catch (e) {
+        setStatus('Invalid Base64', 'err');
+      }
+    };
+
+    document.getElementById('swapBtn').onclick = () => {
+      const a = input.value;
+      input.value = output.value;
+      output.value = a;
+      setStatus('Swapped');
+    };
+
+    document.getElementById('copyBtn').onclick = async () => {
+      const text = output.value;
+      if (!text) return setStatus('Nothing to copy', 'err');
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus('Copied', 'ok');
+      } catch {
+        setStatus('Copy failed', 'err');
+      }
+    };
+
+    document.getElementById('clearBtn').onclick = () => {
+      input.value = '';
+      output.value = '';
+      setStatus('');
+    };
+  </script>
+</body>
+</html>
