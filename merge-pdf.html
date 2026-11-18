@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merge PDF Online Free — No Upload, No Limits</title>
+  <meta name="description" content="Merge multiple PDF files into one online. 100% in your browser, free, no registration, no file size limits." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090b;
+      --card: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #8b5cf6;
+      --accent-hover: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.75rem;
+    }
+    .back:hover { color: var(--accent-hover); }
+    h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(139, 92, 246, 0.05);
+    }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p {
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+    }
+    input[type="file"] { display: none; }
+    .file-list {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #09090b;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+    }
+    .file-item .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 70%;
+    }
+    .file-item .remove {
+      background: none;
+      border: none;
+      color: #f87171;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0 0.3rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1.25rem;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .info {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.85rem;
+      text-align: center;
+    }
+    .privacy {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #71717a;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Merge PDF</h1>
+    <p class="subtitle">Combine multiple PDF files into one. Everything stays in your browser.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">📄</div>
+        <strong>Click or drop PDF files here</strong>
+        <p>Multiple files supported · order will be preserved</p>
+        <input type="file" id="fileInput" accept="application/pdf" multiple />
+      </div>
+
+      <div class="file-list" id="fileList"></div>
+
+      <button class="btn" id="mergeBtn" disabled>Merge PDFs</button>
+      <p class="info" id="info"></p>
+    </div>
+
+    <p class="privacy">100% private · Files never leave your device</p>
+  </div>
+
+  <script>
+    const { PDFDocument } = PDFLib;
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const mergeBtn = document.getElementById('mergeBtn');
+    const info = document.getElementById('info');
+
+    let files = [];
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    function handleFiles(fileListInput) {
+      for (let file of fileListInput) {
+        if (file.type !== 'application/pdf') continue;
+        files.push(file);
+      }
+      renderList();
+      mergeBtn.disabled = files.length < 2;
+      info.textContent = files.length ? `${files.length} file(s) selected` : '';
+    }
+
+    function renderList() {
+      fileList.innerHTML = '';
+      files.forEach((file, index) => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = `
+          <span class="name">${index + 1}. ${file.name}</span>
+          <button class="remove" data-index="${index}">×</button>
+        `;
+        fileList.appendChild(div);
+      });
+
+      document.querySelectorAll('.remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.index);
+          files.splice(idx, 1);
+          renderList();
+          mergeBtn.disabled = files.length < 2;
+          info.textContent = files.length ? `${files.length} file(s) selected` : '';
+        });
+      });
+    }
+
+    mergeBtn.addEventListener('click', async () => {
+      if (files.length < 2) return;
+      mergeBtn.disabled = true;
+      mergeBtn.textContent = 'Merging...';
+
+      try {
+        const mergedPdf = await PDFDocument.create();
+
+        for (let file of files) {
+          const arrayBuffer = await file.arrayBuffer();
+          const pdf = await PDFDocument.load(arrayBuffer);
+          const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          pages.forEach(page => mergedPdf.addPage(page));
+        }
+
+        const pdfBytes = await mergedPdf.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'merged.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        mergeBtn.textContent = 'Merge PDFs';
+        mergeBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        alert('Error merging PDFs. Make sure all files are valid PDFs.');
+        mergeBtn.textContent = 'Merge PDFs';
+        mergeBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
