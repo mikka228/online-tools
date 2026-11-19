@@ -271,9 +271,10 @@
 
         for (const p of pages) {
           const [copied] = await newDoc.copyPages(srcDoc, [p.originalIndex]);
-          if (p.rotation) {
-            copied.setRotation(degrees(p.rotation));
-          }
+          // Combine original page rotation with user-applied rotation
+          const originalAngle = copied.getRotation().angle;
+          const totalAngle = (originalAngle + p.rotation) % 360;
+          copied.setRotation(degrees(totalAngle));
           newDoc.addPage(copied);
         }
 
