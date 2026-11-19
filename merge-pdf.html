@@ -250,7 +250,7 @@
         a.href = url;
         a.download = 'merged.pdf';
         a.click();
-        URL.revokeObjectURL(url);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
 
         mergeBtn.textContent = 'Merge PDFs';
         mergeBtn.disabled = false;
