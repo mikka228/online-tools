@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compress PDF Online Free — No Upload, No Limits</title>
+  <meta name="description" content="Compress PDF files online for free. Reduce PDF size in your browser. No registration, no upload to server, no limits." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #22c55e; --accent-hover: #4ade80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+    .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 14px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(34, 197, 94, 0.05); }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+    input[type="file"] { display: none; }
+    .file-info { margin-top: 1.25rem; background: #09090b; border: 1px solid var(--border); border-radius: 10px; padding: 1rem; display: none; }
+    .file-info.show { display: block; }
+    .file-info .name { font-weight: 500; margin-bottom: 0.3rem; }
+    .file-info .size { color: var(--muted); font-size: 0.9rem; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #09090b; border: none; border-radius: 12px; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 1.25rem; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .info { font-size: 0.9rem; color: var(--muted); margin-top: 0.85rem; text-align: center; }
+    .privacy { margin-top: 1.5rem; font-size: 0.85rem; color: #71717a; text-align: center; }
+    .note { margin-top: 1rem; font-size: 0.85rem; color: #71717a; background: rgba(34,197,94,0.08); border-radius: 10px; padding: 0.75rem 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Compress PDF</h1>
+    <p class="subtitle">Reduce PDF file size. Everything stays in your browser.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">📉</div>
+        <strong>Click or drop a PDF here</strong>
+        <p>One file at a time · processed locally</p>
+        <input type="file" id="fileInput" accept="application/pdf" />
+      </div>
+
+      <div class="file-info" id="fileInfo">
+        <div class="name" id="fileName"></div>
+        <div class="size" id="fileSize"></div>
+      </div>
+
+      <button class="btn" id="compressBtn" disabled>Compress PDF</button>
+      <p class="info" id="info"></p>
+      <div class="note">Note: Compression is moderate (removes unused objects). For heavy image-based PDFs results may be limited in pure browser mode.</div>
+    </div>
+
+    <p class="privacy">100% private · Files never leave your device</p>
+  </div>
+
+  <script>
+    const { PDFDocument } = PDFLib;
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const compressBtn = document.getElementById('compressBtn');
+    const info = document.getElementById('info');
+
+    let selectedFile = null;
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function handleFile(file) {
+      if (file.type !== 'application/pdf') {
+        alert('Please select a PDF file');
+        return;
+      }
+      selectedFile = file;
+      fileName.textContent = file.name;
+      fileSize.textContent = 'Original size: ' + formatSize(file.size);
+      fileInfo.classList.add('show');
+      compressBtn.disabled = false;
+      info.textContent = '';
+    }
+
+    compressBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+      compressBtn.disabled = true;
+      compressBtn.textContent = 'Compressing...';
+      info.textContent = 'Working...';
+
+      try {
+        const arrayBuffer = await selectedFile.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+        
+        // Save with object streams for better compression
+        const compressedBytes = await pdfDoc.save({ useObjectStreams: true });
+        
+        const originalSize = selectedFile.size;
+        const newSize = compressedBytes.length;
+        const saved = originalSize - newSize;
+        const percent = originalSize > 0 ? Math.round((saved / originalSize) * 100) : 0;
+
+        const blob = new Blob([compressedBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = selectedFile.name.replace(/\.pdf$/i, '') + '-compressed.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+
+        info.textContent = `Done! ${formatSize(originalSize)} → ${formatSize(newSize)} (${percent > 0 ? percent + '% smaller' : 'size similar'})`;
+        compressBtn.textContent = 'Compress PDF';
+        compressBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        alert('Error compressing PDF. The file might be encrypted or corrupted.');
+        compressBtn.textContent = 'Compress PDF';
+        compressBtn.disabled = false;
+        info.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
