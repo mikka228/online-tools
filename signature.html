@@ -179,14 +179,49 @@
         .replace(/'/g, '&#39;');
     }
 
+    // For use inside HTML attributes (href, etc.)
+    function escapeAttr(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // Allow only safe phone characters for tel: links
+    function sanitizeTel(str) {
+      if (!str) return '';
+      // Keep digits, +, spaces, dashes, parentheses only
+      var cleaned = String(str).replace(/[^0-9+\s\-()]/g, '');
+      return cleaned;
+    }
+
+    // Basic email validation + strip dangerous chars
+    function sanitizeEmail(str) {
+      if (!str) return '';
+      var s = String(str).trim();
+      // Very basic email pattern
+      if (!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(s)) {
+        return '';
+      }
+      return s;
+    }
+
     function updatePreview() {
       var name = escapeHtml(document.getElementById('name').value) || 'Name';
       var title = escapeHtml(document.getElementById('title').value);
       var company = escapeHtml(document.getElementById('company').value);
-      var phone = escapeHtml(document.getElementById('phone').value);
-      var email = escapeHtml(document.getElementById('email').value);
+      var phoneRaw = document.getElementById('phone').value;
+      var emailRaw = document.getElementById('email').value;
       var website = document.getElementById('website').value.trim();
       var color = document.getElementById('color').value;
+
+      var phoneDisplay = escapeHtml(phoneRaw);
+      var phoneHref = sanitizeTel(phoneRaw);
+      var emailDisplay = escapeHtml(emailRaw);
+      var emailHref = sanitizeEmail(emailRaw);
 
       // Basic color sanitization (only allow hex)
       if (!/^#[0-9A-Fa-f]{3,8}$/.test(color)) color = '#333333';
@@ -198,7 +233,7 @@
         try {
           var url = new URL(website.startsWith('http') ? website : 'https://' + website);
           if (url.protocol === 'http:' || url.protocol === 'https:') {
-            safeWebsite = url.href;
+            safeWebsite = escapeAttr(url.href);
             siteName = escapeHtml(url.hostname + (url.pathname !== '/' ? url.pathname : ''));
           }
         } catch (e) {
@@ -212,8 +247,17 @@
       if (title) html += '<div style="color: #555; margin-top: 2px;">' + title + '</div>';
       if (company) html += '<div style="color: #777; margin-top: 2px;">' + company + '</div>';
       html += '</td><td style="padding-left: 16px;">';
-      if (phone) html += '<div style="margin-bottom: 4px;">📞 <a href="tel:' + phone.replace(/\s/g,'') + '" style="color: #333; text-decoration: none;">' + phone + '</a></div>';
-      if (email) html += '<div style="margin-bottom: 4px;">✉️ <a href="mailto:' + email + '" style="color: #333; text-decoration: none;">' + email + '</a></div>';
+      if (phoneHref) {
+        html += '<div style="margin-bottom: 4px;">📞 <a href="tel:' + escapeAttr(phoneHref) + '" style="color: #333; text-decoration: none;">' + phoneDisplay + '</a></div>';
+      } else if (phoneDisplay) {
+        // Show text only if tel: would be invalid
+        html += '<div style="margin-bottom: 4px;">📞 ' + phoneDisplay + '</div>';
+      }
+      if (emailHref) {
+        html += '<div style="margin-bottom: 4px;">✉️ <a href="mailto:' + escapeAttr(emailHref) + '" style="color: #333; text-decoration: none;">' + emailDisplay + '</a></div>';
+      } else if (emailDisplay) {
+        html += '<div style="margin-bottom: 4px;">✉️ ' + emailDisplay + '</div>';
+      }
       if (safeWebsite) {
         html += '<div>🌐 <a href="' + safeWebsite + '" style="color: ' + color + '; text-decoration: none;">' + siteName + '</a></div>';
       }
