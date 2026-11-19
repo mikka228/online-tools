@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Online Tools — QR, Image Compressor, PDF, JSON & More</title>
-  <meta name="description" content="Free browser tools with no signup: QR code generator, image compressor, password generator, JPEG to PDF, JSON formatter, Base64, Lorem Ipsum and more." />
+  <title>Free Online Tools — PDF Merge, Compress, Split, QR, Image & More</title>
+  <meta name="description" content="Free privacy-first browser tools. Merge, compress, split and organize PDFs, compress images, generate QR codes and passwords. No signup, no uploads — files never leave your device." />
   <style>
     :root {
       --bg: #09090b;
@@ -317,11 +317,52 @@
 
   <script>
     function copyWallet() {
-      navigator.clipboard.writeText('TJCbW7n8xZLoYFQLpN8YcBxaLGd4PNj42U').then(function() {
-        var msg = document.getElementById('copied');
+      var addr = 'TJCbW7n8xZLoYFQLpN8YcBxaLGd4PNj42U';
+      var msg = document.getElementById('copied');
+      function showCopied() {
         msg.style.display = 'block';
+        msg.style.color = '#22c55e';
+        msg.textContent = 'Copied!';
         setTimeout(function() { msg.style.display = 'none'; }, 2000);
-      });
+      }
+      function showError() {
+        msg.style.display = 'block';
+        msg.style.color = '#f87171';
+        msg.textContent = 'Copy failed — select and copy manually';
+        setTimeout(function() { msg.style.display = 'none'; }, 3000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(addr).then(showCopied).catch(function() {
+          // Fallback for older browsers / insecure context
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = addr;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showCopied();
+          } catch (e) {
+            showError();
+          }
+        });
+      } else {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = addr;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showCopied();
+        } catch (e) {
+          showError();
+        }
+      }
     }
   </script>
 </body>
