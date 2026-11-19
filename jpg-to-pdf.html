@@ -169,6 +169,14 @@
     const info = document.getElementById('info');
 
     let files = [];
+    let previewUrls = []; // track ObjectURLs to revoke them
+
+    function revokePreviewUrls() {
+      previewUrls.forEach(url => {
+        try { URL.revokeObjectURL(url); } catch (e) {}
+      });
+      previewUrls = [];
+    }
 
     dropzone.addEventListener('click', () => fileInput.click());
     dropzone.addEventListener('dragover', (e) => {
@@ -194,15 +202,18 @@
     }
 
     function renderPreview() {
+      revokePreviewUrls();
       preview.innerHTML = '';
       files.forEach((file, index) => {
         const div = document.createElement('div');
         div.className = 'preview-item';
         const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file);
+        previewUrls.push(url);
+        img.src = url;
         const btn = document.createElement('button');
         btn.className = 'remove';
-        btn.innerHTML = '×';
+        btn.textContent = '×';
         btn.onclick = (e) => {
           e.stopPropagation();
           files.splice(index, 1);
