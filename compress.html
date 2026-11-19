@@ -353,8 +353,11 @@
       if (!compressedBlob) return;
       const link = document.createElement('a');
       link.download = `compressed.${formatEl.value.split('/')[1]}`;
-      link.href = URL.createObjectURL(compressedBlob);
+      const url = URL.createObjectURL(compressedBlob);
+      link.href = url;
       link.click();
+      // Revoke after a short delay so the download can start
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
   </script>
 </body>
