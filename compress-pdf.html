@@ -128,7 +128,7 @@
         a.href = url;
         a.download = selectedFile.name.replace(/\.pdf$/i, '') + '-compressed.pdf';
         a.click();
-        URL.revokeObjectURL(url);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
 
         info.textContent = `Done! ${formatSize(originalSize)} → ${formatSize(newSize)} (${percent > 0 ? percent + '% smaller' : 'size similar'})`;
         compressBtn.textContent = 'Compress PDF';
