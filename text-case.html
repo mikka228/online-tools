@@ -158,18 +158,25 @@
           result = text.toLowerCase();
           break;
         case 'title':
-          result = text.toLowerCase().replace(/(?:^|\s)\S/g, c => c.toUpperCase());
+          // Unicode-aware: capitalize first letter after start or whitespace
+          result = text.toLowerCase().replace(/(^|\s)\S/gu, c => c.toUpperCase());
           break;
         case 'sentence':
-          result = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+          // Unicode-aware sentence case
+          result = text.toLowerCase().replace(/(^\s*\S|[.!?]\s*\S)/gu, c => c.toUpperCase());
           break;
         case 'toggle':
-          result = text.split('').map(c => 
-            c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()
-          ).join('');
+          result = text.split('').map(c => {
+            const upper = c.toUpperCase();
+            const lower = c.toLowerCase();
+            if (c === upper && c !== lower) return lower;
+            if (c === lower && c !== upper) return upper;
+            return c;
+          }).join('');
           break;
         case 'capitalize':
-          result = text.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+          // Capitalize each word (Unicode letters)
+          result = text.toLowerCase().replace(/(^|[^\p{L}\p{N}])(\p{L})/gu, (m, sep, letter) => sep + letter.toUpperCase());
           break;
       }
 
