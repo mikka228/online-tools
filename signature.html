@@ -169,14 +169,42 @@
   </div>
 
   <script>
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     function updatePreview() {
-      var name = document.getElementById('name').value || 'Name';
-      var title = document.getElementById('title').value;
-      var company = document.getElementById('company').value;
-      var phone = document.getElementById('phone').value;
-      var email = document.getElementById('email').value;
-      var website = document.getElementById('website').value;
+      var name = escapeHtml(document.getElementById('name').value) || 'Name';
+      var title = escapeHtml(document.getElementById('title').value);
+      var company = escapeHtml(document.getElementById('company').value);
+      var phone = escapeHtml(document.getElementById('phone').value);
+      var email = escapeHtml(document.getElementById('email').value);
+      var website = document.getElementById('website').value.trim();
       var color = document.getElementById('color').value;
+
+      // Basic color sanitization (only allow hex)
+      if (!/^#[0-9A-Fa-f]{3,8}$/.test(color)) color = '#333333';
+
+      // Sanitize website URL
+      var safeWebsite = '';
+      var siteName = '';
+      if (website) {
+        try {
+          var url = new URL(website.startsWith('http') ? website : 'https://' + website);
+          if (url.protocol === 'http:' || url.protocol === 'https:') {
+            safeWebsite = url.href;
+            siteName = escapeHtml(url.hostname + (url.pathname !== '/' ? url.pathname : ''));
+          }
+        } catch (e) {
+          siteName = escapeHtml(website);
+        }
+      }
 
       var html = '<table cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #333;">';
       html += '<tr><td style="padding-right: 16px; border-right: 3px solid ' + color + ';">';
@@ -186,9 +214,8 @@
       html += '</td><td style="padding-left: 16px;">';
       if (phone) html += '<div style="margin-bottom: 4px;">📞 <a href="tel:' + phone.replace(/\s/g,'') + '" style="color: #333; text-decoration: none;">' + phone + '</a></div>';
       if (email) html += '<div style="margin-bottom: 4px;">✉️ <a href="mailto:' + email + '" style="color: #333; text-decoration: none;">' + email + '</a></div>';
-      if (website) {
-        var siteName = website.replace(/^https?:\/\//, '');
-        html += '<div>🌐 <a href="' + website + '" style="color: ' + color + '; text-decoration: none;">' + siteName + '</a></div>';
+      if (safeWebsite) {
+        html += '<div>🌐 <a href="' + safeWebsite + '" style="color: ' + color + '; text-decoration: none;">' + siteName + '</a></div>';
       }
       html += '</td></tr></table>';
 
