@@ -144,7 +144,7 @@
         loading.style.display = 'none';
         toolbar.classList.add('show');
         pagesEl.classList.add('show');
-        info.textContent = numPages + ' page' + (numPages !== 1 ? 's' : '') + ' · Click to select, drag to reorder';
+        info.textContent = numPages + ' page' + (numPages !== 1 ? 's' : '') + ' · Use ↑↓ to reorder (or drag on desktop)';
       } catch (err) {
         console.error(err);
         alert('Could not load PDF');
@@ -191,6 +191,8 @@
         const actions = document.createElement('div');
         actions.className = 'page-actions';
         actions.innerHTML = `
+          <button title="Move up" data-action="up">↑</button>
+          <button title="Move down" data-action="down">↓</button>
           <button title="Rotate left" data-action="left">↺</button>
           <button title="Rotate right" data-action="right">↻</button>
           <button title="Delete" data-action="delete">×</button>
@@ -208,6 +210,18 @@
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const action = btn.dataset.action;
+            if (action === 'up' && index > 0) {
+              const tmp = pages[index - 1];
+              pages[index - 1] = pages[index];
+              pages[index] = tmp;
+              renderPages();
+            }
+            if (action === 'down' && index < pages.length - 1) {
+              const tmp = pages[index + 1];
+              pages[index + 1] = pages[index];
+              pages[index] = tmp;
+              renderPages();
+            }
             if (action === 'left') { p.rotation = (p.rotation - 90 + 360) % 360; renderPages(); }
             if (action === 'right') { p.rotation = (p.rotation + 90) % 360; renderPages(); }
             if (action === 'delete') {
