@@ -171,19 +171,24 @@
     splitAllBtn.addEventListener('click', async () => {
       if (!pdfDoc) return;
       const count = pdfDoc.getPageCount();
+      if (count > 15) {
+        const ok = confirm('This will download ' + count + ' files. Some mobile browsers block multiple downloads. Continue?');
+        if (!ok) return;
+      }
       splitAllBtn.disabled = true;
-      info.textContent = 'Splitting...';
+      info.textContent = 'Splitting... (allow multiple downloads if asked)';
       try {
         for (let i = 0; i < count; i++) {
           const newPdf = await PDFDocument.create();
           const [page] = await newPdf.copyPages(pdfDoc, [i]);
           newPdf.addPage(page);
           const bytes = await newPdf.save();
-          download(bytes, originalFile.name.replace(/\.pdf$/i, '') + `-page-${i + 1}.pdf`);
-          // Small delay to avoid browser blocking multiple downloads
-          await new Promise(r => setTimeout(r, 300));
+          download(bytes, originalFile.name.replace(/\.pdf$/i, '') + '-page-' + (i + 1) + '.pdf');
+          // Longer delay helps mobile browsers
+          await new Promise(r => setTimeout(r, 600));
+          info.textContent = 'Downloading page ' + (i + 1) + ' / ' + count;
         }
-        info.textContent = `Split into ${count} files`;
+        info.textContent = 'Split into ' + count + ' files';
       } catch (err) {
         console.error(err);
         alert('Error splitting PDF');
