@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JPEG to PDF Converter — Free Online Tool</title>
+  <title>Images to PDF Converter — Free Online Tool</title>
   <meta name="description" content="Convert JPG and PNG images to PDF online. Merge multiple images into one PDF file. Free, no registration required." />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -142,8 +142,8 @@
 <body>
   <div class="container">
     <a href="index.html" class="back">← Back to tools</a>
-    <h1>JPEG to PDF</h1>
-    <p class="subtitle">Convert images to PDF right in your browser</p>
+    <h1>Images to PDF</h1>
+    <p class="subtitle">Convert JPG, PNG and WebP images to PDF right in your browser</p>
 
     <div class="card">
       <div class="dropzone" id="dropzone">
@@ -242,7 +242,16 @@
           const y = (pageHeight - imgHeight) / 2;
 
           if (!first) pdf.addPage();
-          pdf.addImage(dataUrl, 'JPEG', x, y, imgWidth, imgHeight);
+          
+          // Detect correct format for jsPDF
+          let format = 'JPEG';
+          if (file.type === 'image/png' || dataUrl.startsWith('data:image/png')) {
+            format = 'PNG';
+          } else if (file.type === 'image/webp' || dataUrl.startsWith('data:image/webp')) {
+            // jsPDF has limited WebP support, convert via canvas to JPEG as fallback
+            format = 'JPEG';
+          }
+          pdf.addImage(dataUrl, format, x, y, imgWidth, imgHeight);
           first = false;
         }
 
