@@ -137,6 +137,37 @@
       margin-top: 0.75rem;
       text-align: center;
     }
+  
+    .related {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .related h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .related-links a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .related-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
   </style>
 </head>
 <body>
@@ -158,7 +189,18 @@
       <button class="btn" id="convertBtn" disabled>Create PDF</button>
       <p class="info" id="info"></p>
     </div>
-  </div>
+  
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="merge-pdf.html">Merge PDF</a>
+        <a href="compress-pdf.html">Compress PDF</a>
+        <a href="compress.html">Image Compressor</a>
+        <a href="organize-pdf.html">Organize PDF</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+</div>
 
   <script>
     const { jsPDF } = window.jspdf;
