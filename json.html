@@ -142,6 +142,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -170,6 +194,20 @@
       <textarea id="output" readonly placeholder="Formatted JSON will appear here"></textarea>
     </div>
   
+    
+    <div class="content-block">
+      <h2>What is JSON Formatter?</h2>
+      <p>Format, minify, and validate JSON in your browser. Useful for debugging APIs, config files, and data payloads.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Paste JSON into the input</li>
+        <li>Click Format, Minify, or Validate</li>
+        <li>Copy the output when ready</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Your data stays on the device. Nothing is uploaded.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
