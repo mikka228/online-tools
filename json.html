@@ -197,15 +197,22 @@
     
     <div class="content-block">
       <h2>What is JSON Formatter?</h2>
-      <p>Format, minify, and validate JSON in your browser. Useful for debugging APIs, config files, and data payloads.</p>
+      <p>JSON Formatter pretty-prints, minifies, and validates JSON in the browser. Developers use it to debug API responses, clean config files, or check whether a payload is valid before shipping it.</p>
+
       <h2>How to use</h2>
       <ul>
         <li>Paste JSON into the input</li>
-        <li>Click Format, Minify, or Validate</li>
-        <li>Copy the output when ready</li>
+        <li><strong>Format</strong> — indented, readable layout</li>
+        <li><strong>Minify</strong> — single-line, smaller payload</li>
+        <li><strong>Validate</strong> — confirms the text is valid JSON (including values like <code>null</code>)</li>
       </ul>
+
       <h2>Privacy</h2>
-      <p>Your data stays on the device. Nothing is uploaded.</p>
+      <p>Parsing happens only on your device. Sensitive API samples never leave the browser.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Why is null valid?</strong><br>In JSON, <code>null</code> is a valid value. This tool treats it as success, not an error.</p>
+      <p><strong>Does it fix broken JSON?</strong><br>No. It reports parse errors; you fix the syntax, then format again.</p>
     </div>
 
     <div class="related">
