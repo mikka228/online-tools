@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/text-case.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Text Case Converter — UPPERCASE, lowercase, Title Case</title>
   <meta name="description" content="Convert text to UPPERCASE, lowercase, Title Case and more. Free online text case converter in your browser." />
@@ -112,6 +113,37 @@
     .btn-primary:hover {
       background: var(--accent-hover);
     }
+  
+    .related {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .related h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .related-links a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .related-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
   </style>
 </head>
 <body>
@@ -139,6 +171,18 @@
       <textarea id="output" readonly placeholder="Result will appear here"></textarea>
       <button class="btn btn-primary" id="copyBtn">Copy Result</button>
     </div>
+  
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="json.html">JSON Formatter</a>
+        <a href="base64.html">Base64</a>
+        <a href="lorem.html">Lorem Ipsum</a>
+        <a href="password.html">Password Generator</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+
   </div>
 
   <script>
