@@ -149,6 +149,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -192,6 +216,20 @@
       <div class="result" id="tsResult" style="margin-top:0.9rem">—</div>
     </div>
   
+    
+    <div class="content-block">
+      <h2>What is Unix Timestamp Converter?</h2>
+      <p>Convert Unix timestamps (seconds since 1970-01-01 UTC) to human-readable dates and the other way around. Handy for logs, APIs, and databases.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Enter a timestamp and convert to date</li>
+        <li>Or pick a date and time and get the timestamp</li>
+        <li>Use “Now” for the current second</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>All conversion is done on your device.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
