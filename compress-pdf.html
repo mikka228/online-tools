@@ -120,28 +120,30 @@
     
     <div class="content-block">
       <h2>What is Compress PDF?</h2>
-      <p>This tool reduces PDF file size by re-saving the document with object-stream optimization. It is useful for light size reduction without uploading files to a server.</p>
+      <p>Compress PDF reduces file size so documents are easier to email, upload to forms, or store. This version optimizes the PDF structure (object streams) in your browser. It does <strong>not</strong> re-encode every image at a lower quality — that kind of compression needs heavier processing and is limited in pure client-side tools.</p>
 
-      <h2>How to use</h2>
+      <h2>How to compress a PDF</h2>
       <ul>
-        <li>Select or drop a PDF file</li>
+        <li>Select or drop one PDF</li>
         <li>Click <strong>Compress PDF</strong></li>
-        <li>Download the optimized file and compare sizes</li>
+        <li>Compare the original and new size, then download</li>
       </ul>
 
-      <h2>What to expect</h2>
+      <h2>What results to expect</h2>
       <ul>
-        <li>Works best on PDFs with unused objects or redundant structure</li>
-        <li>PDFs that are mostly large photos often shrink only a little</li>
-        <li>Sometimes the file size stays almost the same — that is normal for already-optimized documents</li>
+        <li><strong>Best case:</strong> files with redundant objects or older structure shrink noticeably</li>
+        <li><strong>Typical case:</strong> moderate reduction or a small change</li>
+        <li><strong>Already optimized scans/photos:</strong> size may barely change — the file was already efficient</li>
       </ul>
+      <p>If you need aggressive photo compression inside a PDF, a desktop app with image re-encoding is usually stronger. This tool focuses on privacy and convenience for everyday size cleanup.</p>
 
       <h2>Privacy</h2>
-      <p>Compression runs entirely in your browser. Your file never leaves the device.</p>
+      <p>Compression runs locally. Your PDF is not uploaded to our servers or any third party.</p>
 
       <h2>FAQ</h2>
-      <p><strong>Why did my file get only slightly smaller?</strong><br>True image recompression needs heavier processing. This tool does safe structural optimization only.</p>
-      <p><strong>Is quality reduced?</strong><br>Text and vector content stay the same. Image quality is not re-encoded at a lower setting.</p>
+      <p><strong>Why is my file almost the same size?</strong><br>The PDF may already be optimized, or most of its weight is in images that this mode does not re-encode.</p>
+      <p><strong>Is text quality affected?</strong><br>No. Text and vector content are preserved.</p>
+      <p><strong>Is there a size limit?</strong><br>Only what your device can load into memory.</p>
     </div>
 
     <div class="related">
