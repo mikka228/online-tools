@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/timestamp.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unix Timestamp Converter — Date to Timestamp</title>
 <meta name="description" content="Convert Unix timestamp to date and date to Unix timestamp. Free online converter for seconds and milliseconds." />
@@ -117,6 +118,37 @@
       color: var(--muted);
       margin-top: 0.6rem;
     }
+  
+    .related {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .related h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .related-links a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .related-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
   </style>
 </head>
 <body>
@@ -159,7 +191,17 @@
 
       <div class="result" id="tsResult" style="margin-top:0.9rem">—</div>
     </div>
-  </div>
+  
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="json.html">JSON Formatter</a>
+        <a href="base64.html">Base64</a>
+        <a href="text-case.html">Text Case</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+</div>
 
   <script>
     const timestamp = document.getElementById('timestamp');
