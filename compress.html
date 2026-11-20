@@ -183,6 +183,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -240,6 +264,26 @@
       <button class="btn" id="downloadBtn">Download Compressed</button>
     </div>
   
+    
+    <div class="content-block">
+      <h2>What is Image Compressor?</h2>
+      <p>Reduce the file size of photos and graphics in your browser. Choose quality, max width, and output format (JPEG, WebP, or PNG).</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Select an image (up to 20 MB)</li>
+        <li>Adjust quality and max width</li>
+        <li>Pick output format and compress</li>
+        <li>Compare original vs compressed size, then download</li>
+      </ul>
+      <h2>Notes</h2>
+      <ul>
+        <li>JPEG quality slider does not apply to PNG (PNG is lossless)</li>
+        <li>Transparent PNGs converted to JPEG get a white background</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Images never leave your device. Compression uses the Canvas API locally.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
