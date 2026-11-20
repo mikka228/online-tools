@@ -169,6 +169,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -191,6 +215,34 @@
       <p class="info" id="info"></p>
     </div>
   
+    
+    <div class="content-block">
+      <h2>What is Images to PDF?</h2>
+      <p>Convert one or more images (JPG, PNG, WebP) into a single PDF. Pages are sized to fit each image while keeping aspect ratio.</p>
+
+      <h2>How to use</h2>
+      <ul>
+        <li>Drop or select images</li>
+        <li>Remove any you do not need from the preview</li>
+        <li>Click <strong>Create PDF</strong> and download</li>
+      </ul>
+
+      <h2>Features</h2>
+      <ul>
+        <li>Supports JPG, PNG, and WebP</li>
+        <li>Multiple images → one multi-page PDF</li>
+        <li>WebP is converted automatically so it embeds correctly</li>
+        <li>No upload to a server</li>
+      </ul>
+
+      <h2>Privacy</h2>
+      <p>Images are processed only in your browser. Nothing is sent to the internet for conversion.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Will PNG transparency be kept?</strong><br>PNG is embedded as PNG when possible. For formats that need conversion (e.g. WebP), output may use JPEG.</p>
+      <p><strong>Is there a limit on the number of images?</strong><br>Only what your device memory can handle. Dozens of large photos may slow down phones.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
