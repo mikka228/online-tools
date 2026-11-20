@@ -267,21 +267,30 @@
     
     <div class="content-block">
       <h2>What is Image Compressor?</h2>
-      <p>Reduce the file size of photos and graphics in your browser. Choose quality, max width, and output format (JPEG, WebP, or PNG).</p>
-      <h2>How to use</h2>
+      <p>Image Compressor shrinks photo and graphic file sizes in the browser so uploads and emails stay within limits. You control quality, maximum width, and output format (JPEG, WebP, or PNG). Nothing is uploaded to a server.</p>
+
+      <h2>How to compress an image</h2>
       <ul>
-        <li>Select an image (up to 20 MB)</li>
-        <li>Adjust quality and max width</li>
-        <li>Pick output format and compress</li>
-        <li>Compare original vs compressed size, then download</li>
+        <li>Select a file (up to 20 MB)</li>
+        <li>Set quality and optional max width</li>
+        <li>Choose JPEG, WebP, or PNG</li>
+        <li>Compress, compare sizes, then download</li>
       </ul>
-      <h2>Notes</h2>
+
+      <h2>Format advice</h2>
       <ul>
-        <li>JPEG quality slider does not apply to PNG (PNG is lossless)</li>
-        <li>Transparent PNGs converted to JPEG get a white background</li>
+        <li><strong>JPEG</strong> — best for photos; quality slider matters</li>
+        <li><strong>WebP</strong> — often smaller than JPEG at similar quality</li>
+        <li><strong>PNG</strong> — lossless; the quality slider does not apply (browser limitation)</li>
       </ul>
+      <p>Converting a transparent PNG to JPEG fills transparency with white so you do not get a black background.</p>
+
       <h2>Privacy</h2>
-      <p>Images never leave your device. Compression uses the Canvas API locally.</p>
+      <p>Compression uses the Canvas API on your device. Images are not sent to our servers.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Why is PNG still large?</strong><br>PNG is lossless. For smaller files, switch to JPEG or WebP.</p>
+      <p><strong>Will faces or text look bad?</strong><br>Use higher quality (e.g. 80–90) for important photos; lower values suit thumbnails.</p>
     </div>
 
     <div class="related">
