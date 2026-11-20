@@ -76,6 +76,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -107,6 +131,35 @@
     </div>
 
     
+    
+    <div class="content-block">
+      <h2>What is Organize PDF?</h2>
+      <p>Organize PDF helps you reorder pages, rotate them, and delete the ones you do not need — then download a clean new file.</p>
+
+      <h2>How to use</h2>
+      <ul>
+        <li>Open a PDF to see page thumbnails</li>
+        <li>Use <strong>↑ ↓</strong> buttons (or drag on desktop) to change order</li>
+        <li>Rotate pages left/right or delete unwanted ones</li>
+        <li>Click <strong>Download PDF</strong></li>
+      </ul>
+
+      <h2>Features</h2>
+      <ul>
+        <li>Visual page thumbnails</li>
+        <li>Reorder, rotate 90°, and delete pages</li>
+        <li>Works on phone and desktop</li>
+        <li>Private — nothing is uploaded</li>
+      </ul>
+
+      <h2>Privacy</h2>
+      <p>Your document stays on your device. Preview and editing use pdf.js and pdf-lib in the browser only.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Can I rotate only some pages?</strong><br>Yes. Select pages (or use the buttons on each thumbnail) and rotate only those.</p>
+      <p><strong>Does reordering change the original file?</strong><br>No. You download a new PDF; the original on your device is untouched.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
