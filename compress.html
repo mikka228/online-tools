@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/compress.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Image Compressor — Compress Photos Online Free</title>
   <meta name="description" content="Compress images online without uploading to a server. Reduce photo size in your browser. Free, private and fast." />
@@ -151,6 +152,37 @@
       margin: 1rem 0 0.5rem;
     }
     .stats strong { color: var(--accent-hover); }
+  
+    .related {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .related h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .related-links a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .related-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
   </style>
 </head>
 <body>
@@ -207,6 +239,17 @@
       <div class="stats">Saved: <strong id="saved"></strong></div>
       <button class="btn" id="downloadBtn">Download Compressed</button>
     </div>
+  
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="jpg-to-pdf.html">Images to PDF</a>
+        <a href="compress-pdf.html">Compress PDF</a>
+        <a href="qr.html">QR Generator</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+
   </div>
 
   <script>
