@@ -44,6 +44,37 @@
     .info { font-size: 0.9rem; color: var(--muted); margin-top: 1rem; text-align: center; }
     .privacy { margin-top: 1.5rem; font-size: 0.85rem; color: #71717a; text-align: center; }
     .loading { text-align: center; color: var(--muted); padding: 2rem; display: none; }
+  
+    .related {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .related h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .related-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .related-links a {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .related-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+
   </style>
 </head>
 <body>
@@ -72,6 +103,18 @@
 
       <div class="pages" id="pages"></div>
       <p class="info" id="info"></p>
+    </div>
+
+    
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="merge-pdf.html">Merge PDF</a>
+        <a href="split-pdf.html">Split PDF</a>
+        <a href="compress-pdf.html">Compress PDF</a>
+        <a href="jpg-to-pdf.html">Images to PDF</a>
+        <a href="index.html">All tools</a>
+      </div>
     </div>
 
     <p class="privacy">100% private · Files never leave your device</p>
