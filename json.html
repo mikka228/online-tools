@@ -153,33 +153,33 @@
       const raw = input.value.trim();
       if (!raw) {
         setStatus('Paste JSON first', 'err');
-        return null;
+        return { ok: false };
       }
       try {
-        return JSON.parse(raw);
+        return { ok: true, data: JSON.parse(raw) };
       } catch (e) {
         setStatus('Invalid JSON: ' + e.message, 'err');
-        return null;
+        return { ok: false };
       }
     }
 
     document.getElementById('formatBtn').onclick = () => {
-      const data = parseJSON();
-      if (data === null) return;
-      output.value = JSON.stringify(data, null, 2);
+      const result = parseJSON();
+      if (!result.ok) return;
+      output.value = JSON.stringify(result.data, null, 2);
       setStatus('Valid JSON · formatted', 'ok');
     };
 
     document.getElementById('minifyBtn').onclick = () => {
-      const data = parseJSON();
-      if (data === null) return;
-      output.value = JSON.stringify(data);
+      const result = parseJSON();
+      if (!result.ok) return;
+      output.value = JSON.stringify(result.data);
       setStatus('Valid JSON · minified', 'ok');
     };
 
     document.getElementById('validateBtn').onclick = () => {
-      const data = parseJSON();
-      if (data === null) return;
+      const result = parseJSON();
+      if (!result.ok) return;
       output.value = input.value.trim();
       setStatus('Valid JSON', 'ok');
     };
