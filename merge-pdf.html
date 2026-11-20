@@ -170,6 +170,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -193,6 +217,35 @@
     </div>
 
     
+    
+    <div class="content-block">
+      <h2>What is Merge PDF?</h2>
+      <p>Merge PDF combines multiple PDF files into a single document. You choose the order, click a button, and download the result. Everything runs in your browser — files are never uploaded to a server.</p>
+
+      <h2>How to use</h2>
+      <ul>
+        <li>Drop or select two or more PDF files</li>
+        <li>Arrange them in the order you need (top to bottom)</li>
+        <li>Click <strong>Merge PDFs</strong> and download the combined file</li>
+      </ul>
+
+      <h2>Features</h2>
+      <ul>
+        <li>Unlimited number of files (limited only by your device memory)</li>
+        <li>Preserves original page quality and order</li>
+        <li>No registration, watermarks, or daily limits</li>
+        <li>Works offline after the page is loaded</li>
+      </ul>
+
+      <h2>Privacy</h2>
+      <p>Your PDFs stay on your device. Nothing is sent to our servers or any third party. Processing uses the open-source pdf-lib library in your browser.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Is there a file size limit?</strong><br>There is no artificial limit. Very large files may fail on phones with little free RAM.</p>
+      <p><strong>Does it work with encrypted PDFs?</strong><br>Password-protected or encrypted PDFs may not open. Remove protection first if possible.</p>
+      <p><strong>Can I merge PDFs on my phone?</strong><br>Yes. The tool is mobile-friendly, but large merges work better on desktop.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
