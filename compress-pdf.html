@@ -66,6 +66,30 @@
       color: var(--accent-hover);
     }
 
+  
+    .content-block {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      line-height: 1.65;
+    }
+    .content-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+
   </style>
 </head>
 <body>
@@ -93,6 +117,33 @@
     </div>
 
     
+    
+    <div class="content-block">
+      <h2>What is Compress PDF?</h2>
+      <p>This tool reduces PDF file size by re-saving the document with object-stream optimization. It is useful for light size reduction without uploading files to a server.</p>
+
+      <h2>How to use</h2>
+      <ul>
+        <li>Select or drop a PDF file</li>
+        <li>Click <strong>Compress PDF</strong></li>
+        <li>Download the optimized file and compare sizes</li>
+      </ul>
+
+      <h2>What to expect</h2>
+      <ul>
+        <li>Works best on PDFs with unused objects or redundant structure</li>
+        <li>PDFs that are mostly large photos often shrink only a little</li>
+        <li>Sometimes the file size stays almost the same — that is normal for already-optimized documents</li>
+      </ul>
+
+      <h2>Privacy</h2>
+      <p>Compression runs entirely in your browser. Your file never leaves the device.</p>
+
+      <h2>FAQ</h2>
+      <p><strong>Why did my file get only slightly smaller?</strong><br>True image recompression needs heavier processing. This tool does safe structural optimization only.</p>
+      <p><strong>Is quality reduced?</strong><br>Text and vector content stay the same. Image quality is not re-encoded at a lower setting.</p>
+    </div>
+
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
