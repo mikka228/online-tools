@@ -5,7 +5,7 @@
   <link rel="canonical" href="https://mikka228.github.io/online-tools/timestamp.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unix Timestamp Converter — Date to Timestamp</title>
-<meta name="description" content="Convert Unix timestamp to date and date to Unix timestamp. Free online converter for seconds and milliseconds." />
+  <meta name="description" content="Convert Unix timestamp to date and date to Unix timestamp. Multi-timezone support. Free online converter for seconds and milliseconds." />
   <style>
     :root {
       --bg: #09090b;
@@ -61,7 +61,7 @@
       margin-bottom: 0.45rem;
       font-weight: 500;
     }
-    input {
+    input, select {
       width: 100%;
       background: #09090b;
       border: 1px solid var(--border);
@@ -72,7 +72,7 @@
       outline: none;
       margin-bottom: 0.9rem;
     }
-    input:focus { border-color: var(--accent); }
+    input:focus, select:focus { border-color: var(--accent); }
     .row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -105,7 +105,7 @@
     }
     .result {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       background: #09090b;
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -113,6 +113,24 @@
       word-break: break-all;
       min-height: 48px;
     }
+    .tz-list {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .tz-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.6rem;
+      background: #09090b;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .tz-label { color: var(--muted); min-width: 110px; }
+    .tz-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; text-align: right; }
     .hint {
       font-size: 0.85rem;
       color: var(--muted);
@@ -179,7 +197,7 @@
   <div class="container">
     <a class="back" href="index.html">← Back to tools</a>
     <h1>Unix Timestamp</h1>
-    <p class="subtitle">Convert timestamps to dates and back</p>
+    <p class="subtitle">Convert timestamps to dates and back · multi-timezone</p>
 
     <div class="card">
       <label for="timestamp">Unix timestamp</label>
@@ -188,15 +206,16 @@
       <div class="actions">
         <button class="btn" id="toDateBtn">To date</button>
         <button class="btn btn-secondary" id="nowBtn">Use now</button>
-        <button class="btn btn-secondary" id="copyDateBtn">Copy date</button>
+        <button class="btn btn-secondary" id="copyDateBtn">Copy local</button>
       </div>
 
       <p class="hint">Supports seconds and milliseconds</p>
       <div class="result" id="dateResult">—</div>
+      <div class="tz-list" id="tzList" style="display:none;"></div>
     </div>
 
     <div class="card">
-      <label>Date & time</label>
+      <label>Date & time (local)</label>
       <div class="row">
         <div>
           <label for="dateInput">Date</label>
@@ -219,10 +238,10 @@
     
     <div class="content-block">
       <h2>What is Unix Timestamp Converter?</h2>
-      <p>Convert Unix timestamps (seconds since 1970-01-01 UTC) to human-readable dates and the other way around. Handy for logs, APIs, and databases.</p>
+      <p>Convert Unix timestamps (seconds since 1970-01-01 UTC) to human-readable dates and the other way around. Shows the same moment in several common time zones.</p>
       <h2>How to use</h2>
       <ul>
-        <li>Enter a timestamp and convert to date</li>
+        <li>Enter a timestamp and convert to date (Local + UTC + popular zones)</li>
         <li>Or pick a date and time and get the timestamp</li>
         <li>Use “Now” for the current second</li>
       </ul>
@@ -244,19 +263,41 @@
   <script>
     const timestamp = document.getElementById('timestamp');
     const dateResult = document.getElementById('dateResult');
+    const tzList = document.getElementById('tzList');
     const dateInput = document.getElementById('dateInput');
     const timeInput = document.getElementById('timeInput');
     const tsResult = document.getElementById('tsResult');
 
+    const TIMEZONES = [
+      { label: 'UTC', tz: 'UTC' },
+      { label: 'Local', tz: undefined },
+      { label: 'Moscow', tz: 'Europe/Moscow' },
+      { label: 'London', tz: 'Europe/London' },
+      { label: 'New York', tz: 'America/New_York' },
+      { label: 'Los Angeles', tz: 'America/Los_Angeles' },
+      { label: 'Tokyo', tz: 'Asia/Tokyo' },
+      { label: 'Dubai', tz: 'Asia/Dubai' },
+      { label: 'Singapore', tz: 'Asia/Singapore' }
+    ];
+
     function pad(n) { return String(n).padStart(2, '0'); }
 
-    function formatDate(d) {
-      return d.getFullYear() + '-' +
-        pad(d.getMonth() + 1) + '-' +
-        pad(d.getDate()) + ' ' +
-        pad(d.getHours()) + ':' +
-        pad(d.getMinutes()) + ':' +
-        pad(d.getSeconds());
+    function formatInZone(d, timeZone) {
+      try {
+        const opts = {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: false
+        };
+        if (timeZone) opts.timeZone = timeZone;
+        // en-CA gives YYYY-MM-DD roughly
+        const parts = new Intl.DateTimeFormat('en-CA', opts).formatToParts(d);
+        const get = (type) => (parts.find(p => p.type === type) || {}).value || '00';
+        return get('year') + '-' + get('month') + '-' + get('day') + ' ' +
+               get('hour') + ':' + get('minute') + ':' + get('second');
+      } catch (e) {
+        return '—';
+      }
     }
 
     function parseTimestamp(value) {
@@ -267,19 +308,46 @@
       return isNaN(d.getTime()) ? null : d;
     }
 
+    function renderTimezones(d) {
+      tzList.innerHTML = '';
+      tzList.style.display = 'flex';
+      TIMEZONES.forEach(function(item) {
+        const row = document.createElement('div');
+        row.className = 'tz-row';
+        const label = document.createElement('span');
+        label.className = 'tz-label';
+        label.textContent = item.label;
+        const value = document.createElement('span');
+        value.className = 'tz-value';
+        value.textContent = formatInZone(d, item.tz);
+        row.appendChild(label);
+        row.appendChild(value);
+        tzList.appendChild(row);
+      });
+      // Also show ISO
+      const isoRow = document.createElement('div');
+      isoRow.className = 'tz-row';
+      isoRow.innerHTML = '<span class="tz-label">ISO 8601</span><span class="tz-value">' + d.toISOString() + '</span>';
+      tzList.appendChild(isoRow);
+    }
+
     document.getElementById('toDateBtn').onclick = () => {
       const d = parseTimestamp(timestamp.value);
       if (!d) {
         dateResult.textContent = 'Invalid timestamp';
+        tzList.style.display = 'none';
         return;
       }
-      dateResult.textContent = formatDate(d) + ' (local)';
+      dateResult.textContent = formatInZone(d, undefined) + ' (local)';
+      renderTimezones(d);
     };
 
     document.getElementById('nowBtn').onclick = () => {
       const now = Math.floor(Date.now() / 1000);
       timestamp.value = String(now);
-      dateResult.textContent = formatDate(new Date()) + ' (local)';
+      const d = new Date();
+      dateResult.textContent = formatInZone(d, undefined) + ' (local)';
+      renderTimezones(d);
     };
 
     document.getElementById('copyDateBtn').onclick = async () => {
@@ -310,7 +378,6 @@
 
     document.getElementById('nowBtn').click();
     const now = new Date();
-    // Use local date components, not UTC (toISOString is UTC)
     dateInput.value = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
     timeInput.value = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
   </script>
