@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <link rel="canonical" href="https://mikka228.github.io/online-tools/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Online Tools — PDF Merge, Compress, Split, QR, Image & More</title>
-  <meta name="description" content="Free privacy-first browser tools. Merge, compress, split and organize PDFs, compress images, generate QR codes and passwords. No signup, no uploads — files never leave your device." />
+  <title>Free Online Tools — PDF, Image & Developer Utilities</title>
+  <meta name="description" content="Free privacy-first browser tools. Merge, compress and split PDFs, compress and resize images, generate QR codes, format JSON and more. No signup, files never leave your device." />
   <style>
     :root {
       --bg: #09090b;
@@ -32,7 +32,7 @@
     }
     header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
       padding-top: 1rem;
     }
     .logo {
@@ -43,7 +43,7 @@
       letter-spacing: -0.02em;
     }
     header h1 {
-      font-size: 2.75rem;
+      font-size: 2.6rem;
       font-weight: 700;
       letter-spacing: -0.04em;
       margin-bottom: 0.75rem;
@@ -53,8 +53,8 @@
     }
     header p {
       color: var(--muted);
-      font-size: 1.15rem;
-      max-width: 480px;
+      font-size: 1.1rem;
+      max-width: 520px;
       margin: 0 auto;
     }
     .badge {
@@ -72,14 +72,14 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.15rem;
     }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 1.75rem;
+      padding: 1.5rem;
       text-decoration: none;
       color: inherit;
       display: flex;
@@ -89,40 +89,51 @@
     .card:hover {
       background: var(--card-hover);
       border-color: #3f3f46;
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
     }
     .card-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 1.25rem;
+      font-size: 1.3rem;
+      margin-bottom: 1.1rem;
     }
     .card h2 {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
       letter-spacing: -0.02em;
     }
     .card p {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       flex-grow: 1;
-      line-height: 1.55;
+      line-height: 1.5;
     }
     .card .cta {
-      margin-top: 1.35rem;
+      margin-top: 1.2rem;
       color: var(--accent-hover);
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 2.4rem 0 1rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title:first-of-type { margin-top: 0.5rem; }
     .support {
       text-align: center;
-      margin: 4rem 0 2rem;
+      margin: 3.5rem 0 2rem;
       padding: 2rem 1.5rem;
       background: var(--card);
       border-radius: 20px;
@@ -143,9 +154,7 @@
       font-weight: 600;
       margin-bottom: 1.5rem;
     }
-    .support-btn:hover {
-      background: var(--accent-hover);
-    }
+    .support-btn:hover { background: var(--accent-hover); }
     .wallet-label {
       font-size: 0.85rem;
       color: var(--muted);
@@ -164,9 +173,7 @@
       margin: 0 auto 0.5rem;
       max-width: 420px;
     }
-    .wallet:hover {
-      border-color: var(--accent);
-    }
+    .wallet:hover { border-color: var(--accent); }
     .copy-hint {
       font-size: 0.8rem;
       color: #71717a;
@@ -180,19 +187,12 @@
     footer a {
       color: var(--accent-hover);
       text-decoration: none;
+      margin: 0 0.35rem;
     }
     @media (max-width: 600px) {
-      header h1 { font-size: 2.1rem; }
+      header h1 { font-size: 2rem; }
       .grid { grid-template-columns: 1fr; }
     }
-    .section-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin: 2.5rem 0 1rem;
-      letter-spacing: -0.02em;
-    }
-    .section-title:first-of-type { margin-top: 0.5rem; }
   </style>
 </head>
 <body>
@@ -204,38 +204,33 @@
       <p>Privacy-first tools that run entirely in your browser. Files never leave your device.</p>
     </header>
 
-    
-    <p class="section-title">PDF Tools</p>
+    <p class="section-title">📑 PDF Tools</p>
     <div class="grid">
-<a href="merge-pdf.html" class="card">
+      <a href="merge-pdf.html" class="card">
         <div class="card-icon" style="background: rgba(139,92,246,0.15); color: #a78bfa;">📑</div>
         <h2>Merge PDF</h2>
         <p>Combine multiple PDF files into one. 100% in browser, no upload, no limits.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="compress-pdf.html" class="card">
+      <a href="compress-pdf.html" class="card">
         <div class="card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">📉</div>
         <h2>Compress PDF</h2>
-        <p>Reduce PDF file size. 100% in browser, no upload, free.</p>
+        <p>Reduce PDF file size. Structural optimization in the browser.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="split-pdf.html" class="card">
+      <a href="split-pdf.html" class="card">
         <div class="card-icon" style="background: rgba(59,130,246,0.15); color: #60a5fa;">✂️</div>
         <h2>Split PDF</h2>
         <p>Extract pages or split PDF into separate files. Private & free.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="organize-pdf.html" class="card">
+      <a href="organize-pdf.html" class="card">
         <div class="card-icon" style="background: rgba(168,85,247,0.15); color: #c084fc;">🗂️</div>
         <h2>Organize PDF</h2>
         <p>Reorder, rotate and delete pages. Drag & drop, private & free.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="jpg-to-pdf.html" class="card">
+      <a href="jpg-to-pdf.html" class="card">
         <div class="card-icon" style="background: rgba(249,115,22,0.15); color: #fb923c;">📄</div>
         <h2>Images to PDF</h2>
         <p>Convert JPG, PNG and WebP images into a PDF file right in your browser.</p>
@@ -243,65 +238,61 @@
       </a>
     </div>
 
-    <p class="section-title">Other Tools</p>
+    <p class="section-title">🖼️ Image Tools</p>
     <div class="grid">
-<a href="qr.html" class="card">
-        <div class="card-icon" style="background: rgba(139,92,246,0.15); color: #a78bfa;">📱</div>
-        <h2>QR Code Generator</h2>
-        <p>Create QR codes for links, text and Wi-Fi. Customize colors and download as PNG.</p>
-        <div class="cta">Open →</div>
-      </a>
-
-<a href="compress.html" class="card">
+      <a href="compress.html" class="card">
         <div class="card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">🖼️</div>
         <h2>Image Compressor</h2>
         <p>Compress photos directly in your browser. Files never leave your device.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="signature.html" class="card">
-        <div class="card-icon" style="background: rgba(236,72,153,0.15); color: #f472b6;">✉️</div>
-        <h2>Email Signature</h2>
-        <p>Create a beautiful email signature in 30 seconds with live preview.</p>
+      <a href="qr.html" class="card">
+        <div class="card-icon" style="background: rgba(139,92,246,0.15); color: #a78bfa;">📱</div>
+        <h2>QR Code Generator</h2>
+        <p>Create QR codes for links, text and Wi-Fi. Download as PNG or SVG.</p>
         <div class="cta">Open →</div>
       </a>
+    </div>
 
-<a href="password.html" class="card">
-        <div class="card-icon" style="background: rgba(168,85,247,0.15); color: #c084fc;">🔐</div>
-        <h2>Password Generator</h2>
-        <p>Generate strong passwords of any length with letters, numbers and symbols.</p>
-        <div class="cta">Open →</div>
-      </a>
-
-<a href="text-case.html" class="card">
-        <div class="card-icon" style="background: rgba(6,182,212,0.15); color: #22d3ee;">Aa</div>
-        <h2>Text Case Converter</h2>
-        <p>Change text case: UPPERCASE, lowercase, Title Case and more.</p>
-        <div class="cta">Open →</div>
-      </a>
-
-<a href="json.html" class="card">
+    <p class="section-title">🛠 Text & Developer Tools</p>
+    <div class="grid">
+      <a href="json.html" class="card">
         <div class="card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">{ }</div>
         <h2>JSON Formatter</h2>
         <p>Format, minify and validate JSON instantly in your browser.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="timestamp.html" class="card">
-        <div class="card-icon" style="background: rgba(56,189,248,0.15); color: #7dd3fc;">⏱</div>
-        <h2>Unix Timestamp</h2>
-        <p>Convert Unix timestamps to human dates and back.</p>
-        <div class="cta">Open →</div>
-      </a>
-
-<a href="base64.html" class="card">
+      <a href="base64.html" class="card">
         <div class="card-icon" style="background: rgba(245,158,11,0.15); color: #fbbf24;">🔢</div>
         <h2>Base64 Encode / Decode</h2>
         <p>Encode and decode Base64 text instantly in your browser.</p>
         <div class="cta">Open →</div>
       </a>
-
-<a href="lorem.html" class="card">
+      <a href="timestamp.html" class="card">
+        <div class="card-icon" style="background: rgba(56,189,248,0.15); color: #7dd3fc;">⏱</div>
+        <h2>Unix Timestamp</h2>
+        <p>Convert Unix timestamps to human dates with multi-timezone view.</p>
+        <div class="cta">Open →</div>
+      </a>
+      <a href="text-case.html" class="card">
+        <div class="card-icon" style="background: rgba(6,182,212,0.15); color: #22d3ee;">Aa</div>
+        <h2>Text Case Converter</h2>
+        <p>Change text case: UPPERCASE, lowercase, Title Case and more.</p>
+        <div class="cta">Open →</div>
+      </a>
+      <a href="password.html" class="card">
+        <div class="card-icon" style="background: rgba(168,85,247,0.15); color: #c084fc;">🔐</div>
+        <h2>Password Generator</h2>
+        <p>Generate strong passwords of any length with letters, numbers and symbols.</p>
+        <div class="cta">Open →</div>
+      </a>
+      <a href="signature.html" class="card">
+        <div class="card-icon" style="background: rgba(236,72,153,0.15); color: #f472b6;">✉️</div>
+        <h2>Email Signature</h2>
+        <p>Create a clean email signature in 30 seconds with live preview.</p>
+        <div class="cta">Open →</div>
+      </a>
+      <a href="lorem.html" class="card">
         <div class="card-icon" style="background: rgba(167,139,250,0.15); color: #c4b5fd;">📝</div>
         <h2>Lorem Ipsum Generator</h2>
         <p>Generate placeholder text for designs, mockups and drafts.</p>
@@ -320,7 +311,12 @@
     </div>
 
     <footer>
-      <p>Made with ❤️ · <a href="https://github.com/mikka228/online-tools">GitHub</a></p>
+      <p>
+        <a href="about.html">About</a> ·
+        <a href="privacy.html">Privacy</a> ·
+        <a href="contact.html">Contact</a> ·
+        <a href="https://github.com/mikka228/online-tools">GitHub</a>
+      </p>
     </footer>
   </div>
 
@@ -342,7 +338,6 @@
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(addr).then(showCopied).catch(function() {
-          // Fallback for older browsers / insecure context
           try {
             var ta = document.createElement('textarea');
             ta.value = addr;
@@ -353,9 +348,7 @@
             document.execCommand('copy');
             document.body.removeChild(ta);
             showCopied();
-          } catch (e) {
-            showError();
-          }
+          } catch (e) { showError(); }
         });
       } else {
         try {
@@ -368,9 +361,7 @@
           document.execCommand('copy');
           document.body.removeChild(ta);
           showCopied();
-        } catch (e) {
-          showError();
-        }
+        } catch (e) { showError(); }
       }
     }
   </script>
