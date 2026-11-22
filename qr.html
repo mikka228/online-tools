@@ -5,8 +5,8 @@
   <link rel="canonical" href="https://mikka228.github.io/online-tools/qr.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Code Generator — Free Online QR Maker</title>
-  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG. Works in your browser, no registration." />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration." />
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
   <style>
     :root {
       --bg: #09090b;
@@ -108,9 +108,15 @@
       align-items: center;
       justify-content: center;
     }
-    #qrcode img, #qrcode canvas {
+    #qrcode canvas, #qrcode img, #qrcode svg {
       display: block;
       max-width: 100%;
+    }
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .btn {
       display: inline-flex;
@@ -120,12 +126,21 @@
       color: white;
       border: none;
       border-radius: 12px;
-      padding: 0.9rem 1.6rem;
+      padding: 0.9rem 1.4rem;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
     }
     .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: rgba(139, 92, 246, 0.1);
+    }
   
     .related {
       margin-top: 2.5rem;
@@ -187,7 +202,7 @@
   <div class="container">
     <a href="index.html" class="back">← Back to tools</a>
     <h1>QR Code Generator</h1>
-    <p class="subtitle">Create a QR code in seconds</p>
+    <p class="subtitle">Create a QR code in seconds · PNG & SVG</p>
 
     <div class="card">
       <label for="text">Text or URL</label>
@@ -229,19 +244,22 @@
 
     <div class="card preview">
       <div id="qrcode"></div>
-      <button class="btn" id="downloadBtn">Download PNG</button>
+      <div class="btn-row">
+        <button class="btn" id="downloadPngBtn">Download PNG</button>
+        <button class="btn btn-secondary" id="downloadSvgBtn">Download SVG</button>
+      </div>
     </div>
   
     
     <div class="content-block">
       <h2>What is a QR Code Generator?</h2>
-      <p>A QR code stores text, a website URL, or Wi-Fi login details in a square pattern that phones can scan. This generator builds the code in your browser and lets you download a PNG — useful for menus, event check-in, product packaging, or sharing a link without typing.</p>
+      <p>A QR code stores text, a website URL, or Wi-Fi login details in a square pattern that phones can scan. This generator builds the code in your browser and lets you download a PNG or SVG — useful for menus, event check-in, product packaging, or sharing a link without typing.</p>
 
       <h2>How to create a QR code</h2>
       <ul>
         <li>Enter a URL, plain text, or Wi-Fi details</li>
         <li>Optionally change foreground/background colors and size</li>
-        <li>Download the PNG and use it in print or on screen</li>
+        <li>Download the PNG (raster) or SVG (vector, scalable)</li>
       </ul>
 
       <h2>Tips for reliable scans</h2>
@@ -249,14 +267,15 @@
         <li>Keep enough contrast between dark modules and light background</li>
         <li>Do not stretch the image; scale it proportionally</li>
         <li>Leave a quiet margin (white space) around the code when placing it on a design</li>
+        <li>Prefer SVG for print and high-resolution needs</li>
       </ul>
 
       <h2>Privacy</h2>
       <p>Your text never leaves the device. The code is drawn locally with a client-side library.</p>
 
       <h2>FAQ</h2>
-      <p><strong>Can I make a Wi-Fi QR code?</strong><br>Yes, if the form supports Wi-Fi fields — scanning connects guests without reading the password aloud.</p>
-      <p><strong>Is the PNG high enough resolution for print?</strong><br>Choose a larger size before download if you need posters or stickers.</p>
+      <p><strong>Can I make a Wi-Fi QR code?</strong><br>Yes — use the format <code>WIFI:T:WPA;S:NetworkName;P:password;;</code> in the text field.</p>
+      <p><strong>Is the PNG high enough resolution for print?</strong><br>Choose a larger size before download, or use SVG for perfect scaling.</p>
     </div>
 
     <div class="related">
@@ -279,19 +298,49 @@
     const colorLightEl = document.getElementById('colorLight');
     const errorCorrectionEl = document.getElementById('errorCorrection');
     const qrcodeEl = document.getElementById('qrcode');
-    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadPngBtn = document.getElementById('downloadPngBtn');
+    const downloadSvgBtn = document.getElementById('downloadSvgBtn');
+
+    let currentSvg = '';
 
     function generate() {
       const text = textEl.value.trim() || ' ';
-      const size = parseInt(sizeEl.value);
+      const size = parseInt(sizeEl.value, 10);
+      const colorDark = colorDarkEl.value;
+      const colorLight = colorLightEl.value;
+      const errorCorrection = errorCorrectionEl.value;
+
       qrcodeEl.innerHTML = '';
-      new QRCode(qrcodeEl, {
-        text: text,
+
+      // Canvas for preview + PNG
+      QRCode.toCanvas(document.createElement('canvas'), text, {
         width: size,
-        height: size,
-        colorDark: colorDarkEl.value,
-        colorLight: colorLightEl.value,
-        correctLevel: QRCode.CorrectLevel[errorCorrectionEl.value]
+        margin: 2,
+        color: {
+          dark: colorDark,
+          light: colorLight
+        },
+        errorCorrectionLevel: errorCorrection
+      }, function (err, canvas) {
+        if (err) {
+          qrcodeEl.textContent = 'Error generating QR';
+          return;
+        }
+        qrcodeEl.appendChild(canvas);
+      });
+
+      // SVG string for download
+      QRCode.toString(text, {
+        type: 'svg',
+        width: size,
+        margin: 2,
+        color: {
+          dark: colorDark,
+          light: colorLight
+        },
+        errorCorrectionLevel: errorCorrection
+      }, function (err, svg) {
+        if (!err) currentSvg = svg;
       });
     }
 
@@ -302,32 +351,35 @@
 
     generate();
 
-    downloadBtn.addEventListener('click', function() {
-      // Prefer canvas if available (more reliable)
+    downloadPngBtn.addEventListener('click', function() {
       var canvas = qrcodeEl.querySelector('canvas');
-      var img = qrcodeEl.querySelector('img');
-      var dataUrl = null;
-
-      if (canvas) {
-        dataUrl = canvas.toDataURL('image/png');
-      } else if (img && img.src) {
-        dataUrl = img.src;
-      }
-
-      if (!dataUrl) {
+      if (!canvas) {
         alert('QR code is not ready yet');
         return;
       }
-
-      // Create temporary link for download
+      var dataUrl = canvas.toDataURL('image/png');
       var link = document.createElement('a');
       link.href = dataUrl;
       link.download = 'qrcode.png';
-      
-      // For mobile compatibility
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    });
+
+    downloadSvgBtn.addEventListener('click', function() {
+      if (!currentSvg) {
+        alert('QR code is not ready yet');
+        return;
+      }
+      var blob = new Blob([currentSvg], { type: 'image/svg+xml' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'qrcode.svg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
     });
   </script>
 </body>
