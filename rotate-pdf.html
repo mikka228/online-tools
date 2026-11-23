@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/rotate-pdf.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rotate PDF — Free Online PDF Page Rotator</title>
+  <meta name="description" content="Rotate PDF pages 90°, 180° or 270° in your browser. Free, private, no upload. Choose all pages or specific ones." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #a855f7; --accent-hover: #c084fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+    .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 14px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(168, 85, 247, 0.05); }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+    input[type="file"] { display: none; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; font-weight: 500; }
+    select, input[type="text"] {
+      width: 100%; background: #09090b; border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.75rem 0.95rem; color: var(--text); font-size: 1rem; outline: none; margin-bottom: 0.9rem;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--accent); color: white; border: none; border-radius: 12px;
+      padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .file-info { margin-top: 1rem; background: #09090b; border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1rem; display: none; }
+    .file-info.show { display: block; }
+    .info { font-size: 0.9rem; color: var(--muted); margin-top: 0.75rem; text-align: center; }
+    .privacy { font-size: 0.85rem; color: #71717a; text-align: center; margin-top: 1rem; }
+    .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .related-links a { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.75rem; color: var(--text); text-decoration: none; font-size: 0.85rem; }
+    .related-links a:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .content-block { margin-top: 2.5rem; padding: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 18px; line-height: 1.65; }
+    .content-block h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Rotate PDF</h1>
+    <p class="subtitle">Rotate pages 90°, 180° or 270°. Everything stays in your browser.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">🔄</div>
+        <strong>Click or drop a PDF here</strong>
+        <p>One file · processed locally</p>
+        <input type="file" id="fileInput" accept="application/pdf" />
+      </div>
+
+      <div class="file-info" id="fileInfo">
+        <div id="fileName" style="font-weight:500; margin-bottom:0.25rem;"></div>
+        <div id="fileMeta" style="color:var(--muted); font-size:0.9rem;"></div>
+      </div>
+
+      <div id="settings" style="display:none; margin-top:1.25rem;">
+        <label for="angle">Rotation</label>
+        <select id="angle">
+          <option value="90">90° clockwise</option>
+          <option value="180">180°</option>
+          <option value="270">270° clockwise (90° counter-clockwise)</option>
+        </select>
+
+        <label for="pages">Pages (leave empty = all)</label>
+        <input type="text" id="pages" placeholder="e.g. 1,3,5-8" />
+
+        <button class="btn" id="rotateBtn">Rotate & Download</button>
+        <p class="privacy">Your PDF never leaves this device</p>
+      </div>
+
+      <p class="info" id="status"></p>
+    </div>
+
+    <div class="content-block">
+      <h2>What is Rotate PDF?</h2>
+      <p>Rotate one or more pages of a PDF by 90°, 180° or 270° without uploading the file. Useful when a scanned document is sideways or upside down.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Select or drop a PDF</li>
+        <li>Choose the rotation angle</li>
+        <li>Optionally specify pages (e.g. <code>1,3,5-8</code>)</li>
+        <li>Download the rotated PDF</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Rotation is done with pdf-lib in your browser. The file is not sent to any server.</p>
+    </div>
+
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="organize-pdf.html">Organize PDF</a>
+        <a href="merge-pdf.html">Merge PDF</a>
+        <a href="split-pdf.html">Split PDF</a>
+        <a href="compress-pdf.html">Compress PDF</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { PDFDocument, degrees } = PDFLib;
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileMeta = document.getElementById('fileMeta');
+    const settings = document.getElementById('settings');
+    const angleEl = document.getElementById('angle');
+    const pagesEl = document.getElementById('pages');
+    const rotateBtn = document.getElementById('rotateBtn');
+    const status = document.getElementById('status');
+
+    let selectedFile = null;
+    let pageCount = 0;
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function formatSize(b) {
+      if (b < 1024) return b + ' B';
+      if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+      return (b/(1024*1024)).toFixed(2) + ' MB';
+    }
+
+    async function handleFile(file) {
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        alert('Please select a PDF file');
+        return;
+      }
+      selectedFile = file;
+      status.textContent = 'Loading…';
+      try {
+        const buf = await file.arrayBuffer();
+        const doc = await PDFDocument.load(buf, { ignoreEncryption: true });
+        pageCount = doc.getPageCount();
+        fileName.textContent = file.name;
+        fileMeta.textContent = pageCount + ' page' + (pageCount > 1 ? 's' : '') + ' · ' + formatSize(file.size);
+        fileInfo.classList.add('show');
+        settings.style.display = 'block';
+        status.textContent = '';
+      } catch (e) {
+        console.error(e);
+        status.textContent = 'Failed to load PDF. It may be encrypted or corrupted.';
+        settings.style.display = 'none';
+      }
+    }
+
+    function parsePages(str, max) {
+      if (!str || !str.trim()) {
+        return Array.from({ length: max }, (_, i) => i);
+      }
+      const set = new Set();
+      str.split(',').forEach(part => {
+        part = part.trim();
+        if (!part) return;
+        if (part.includes('-')) {
+          const [a, b] = part.split('-').map(x => parseInt(x.trim(), 10));
+          if (!isNaN(a) && !isNaN(b)) {
+            const from = Math.min(a, b);
+            const to = Math.max(a, b);
+            for (let i = from; i <= to; i++) {
+              if (i >= 1 && i <= max) set.add(i - 1);
+            }
+          }
+        } else {
+          const n = parseInt(part, 10);
+          if (!isNaN(n) && n >= 1 && n <= max) set.add(n - 1);
+        }
+      });
+      return Array.from(set).sort((a, b) => a - b);
+    }
+
+    rotateBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+      rotateBtn.disabled = true;
+      rotateBtn.textContent = 'Rotating…';
+      status.textContent = '';
+
+      try {
+        const buf = await selectedFile.arrayBuffer();
+        const doc = await PDFDocument.load(buf, { ignoreEncryption: true });
+        const angle = parseInt(angleEl.value, 10);
+        const indices = parsePages(pagesEl.value, doc.getPageCount());
+
+        if (!indices.length) {
+          status.textContent = 'No valid pages selected';
+          rotateBtn.disabled = false;
+          rotateBtn.textContent = 'Rotate & Download';
+          return;
+        }
+
+        indices.forEach(i => {
+          const page = doc.getPage(i);
+          const current = page.getRotation().angle;
+          page.setRotation(degrees((current + angle) % 360));
+        });
+
+        const bytes = await doc.save();
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = selectedFile.name.replace(/\.pdf$/i, '') + '-rotated.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+
+        status.textContent = 'Done — rotated ' + indices.length + ' page' + (indices.length > 1 ? 's' : '');
+      } catch (e) {
+        console.error(e);
+        status.textContent = 'Error rotating PDF';
+      }
+      rotateBtn.disabled = false;
+      rotateBtn.textContent = 'Rotate & Download';
+    });
+  </script>
+</body>
+</html>
