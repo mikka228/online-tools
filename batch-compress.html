@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/batch-compress.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Batch Image Compressor — Compress Multiple Photos Free</title>
+  <meta name="description" content="Compress many images at once in your browser. Set quality, see progress and savings, download all as ZIP. Private, no upload." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #22c55e; --accent-hover: #4ade80;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+    .container { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 14px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(34, 197, 94, 0.05); }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+    input[type="file"] { display: none; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; font-weight: 500; }
+    input[type="range"], select {
+      width: 100%; background: #09090b; border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.7rem 0.9rem; color: var(--text); font-size: 1rem; outline: none; margin-bottom: 0.9rem;
+    }
+    input[type="range"] { padding: 0.4rem 0; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #09090b; border: none; border-radius: 12px;
+      padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 0.4rem;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); margin-top: 0.6rem; }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(34,197,94,0.08); }
+    .privacy { font-size: 0.85rem; color: #71717a; text-align: center; margin-top: 0.85rem; }
+    .file-list { margin-top: 1rem; max-height: 280px; overflow-y: auto; }
+    .file-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+      padding: 0.55rem 0.7rem; background: #09090b; border: 1px solid var(--border);
+      border-radius: 10px; margin-bottom: 0.4rem; font-size: 0.88rem;
+    }
+    .file-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .file-size { color: var(--muted); white-space: nowrap; }
+    .file-status { font-size: 0.8rem; color: var(--accent-hover); white-space: nowrap; }
+    .progress-wrap { margin-top: 1rem; display: none; }
+    .progress-bar {
+      height: 8px; background: #09090b; border-radius: 999px; overflow: hidden; border: 1px solid var(--border);
+    }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
+    .progress-text { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; text-align: center; }
+    .summary { margin-top: 1rem; text-align: center; font-size: 0.95rem; color: var(--muted); display: none; }
+    .summary strong { color: var(--accent-hover); }
+    .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .related-links a { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.75rem; color: var(--text); text-decoration: none; font-size: 0.85rem; }
+    .related-links a:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .content-block { margin-top: 2.5rem; padding: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 18px; line-height: 1.65; }
+    .content-block h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Batch Image Compressor</h1>
+    <p class="subtitle">Compress many photos at once. Download as ZIP. 100% private.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">📦</div>
+        <strong>Click or drop multiple images</strong>
+        <p>JPG, PNG, WebP · up to 50 files · 20 MB each</p>
+        <input type="file" id="fileInput" accept="image/*" multiple />
+      </div>
+
+      <div id="settings" style="display:none; margin-top:1.25rem;">
+        <div class="row">
+          <div>
+            <label for="quality">Quality: <span id="qualityVal">80</span>%</label>
+            <input type="range" id="quality" min="10" max="100" value="80" />
+          </div>
+          <div>
+            <label for="format">Output format</label>
+            <select id="format">
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/webp">WebP</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label for="maxWidth">Max width (px, 0 = no limit)</label>
+            <input type="number" id="maxWidth" value="1920" min="0" max="8000" style="width:100%;background:#09090b;border:1px solid var(--border);border-radius:12px;padding:0.75rem 0.95rem;color:var(--text);font-size:1rem;outline:none;margin-bottom:0.9rem;" />
+          </div>
+          <div></div>
+        </div>
+
+        <button class="btn" id="compressBtn">Compress All</button>
+        <button class="btn btn-secondary" id="clearBtn">Clear list</button>
+        <p class="privacy">All processing happens on your device</p>
+      </div>
+
+      <div class="file-list" id="fileList"></div>
+
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">0 / 0</div>
+      </div>
+
+      <div class="summary" id="summary"></div>
+      <button class="btn" id="downloadZipBtn" style="display:none; margin-top:1rem;">Download ZIP</button>
+    </div>
+
+    <div class="content-block">
+      <h2>What is Batch Image Compressor?</h2>
+      <p>Select dozens of photos, set quality and optional max width, then compress them all in one go. Download the results as a single ZIP archive. Everything runs in your browser.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Drop or select multiple images</li>
+        <li>Choose quality and format</li>
+        <li>Optionally limit max width</li>
+        <li>Press Compress All and wait for the progress</li>
+        <li>Download the ZIP</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>No files are uploaded. Compression and ZIP creation happen entirely on your device.</p>
+    </div>
+
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="compress.html">Image Compressor</a>
+        <a href="resize.html">Image Resizer</a>
+        <a href="convert.html">Image Converter</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const settings = document.getElementById('settings');
+    const qualityEl = document.getElementById('quality');
+    const qualityVal = document.getElementById('qualityVal');
+    const formatEl = document.getElementById('format');
+    const maxWidthEl = document.getElementById('maxWidth');
+    const compressBtn = document.getElementById('compressBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const fileList = document.getElementById('fileList');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const summary = document.getElementById('summary');
+    const downloadZipBtn = document.getElementById('downloadZipBtn');
+
+    let files = []; // { file, name, size, status, blob? }
+    let results = [];
+
+    qualityEl.addEventListener('input', () => { qualityVal.textContent = qualityEl.value; });
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) addFiles(fileInput.files); fileInput.value = ''; });
+
+    function formatSize(b) {
+      if (b < 1024) return b + ' B';
+      if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+      return (b/(1024*1024)).toFixed(2) + ' MB';
+    }
+
+    function addFiles(fileListObj) {
+      const arr = Array.from(fileListObj);
+      if (files.length + arr.length > 50) {
+        alert('Maximum 50 files at a time');
+        return;
+      }
+      for (const f of arr) {
+        if (!f.type.startsWith('image/')) continue;
+        if (f.size > 20 * 1024 * 1024) continue;
+        files.push({ file: f, name: f.name, size: f.size, status: 'ready' });
+      }
+      renderList();
+      settings.style.display = files.length ? 'block' : 'none';
+      downloadZipBtn.style.display = 'none';
+      summary.style.display = 'none';
+      results = [];
+    }
+
+    function renderList() {
+      fileList.innerHTML = '';
+      files.forEach((item, i) => {
+        const row = document.createElement('div');
+        row.className = 'file-row';
+        row.innerHTML = '<span class="file-name">' + escapeHtml(item.name) + '</span>' +
+          '<span class="file-size">' + formatSize(item.size) + '</span>' +
+          '<span class="file-status">' + (item.status === 'ready' ? '' : item.status) + '</span>';
+        fileList.appendChild(row);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    clearBtn.addEventListener('click', () => {
+      files = [];
+      results = [];
+      renderList();
+      settings.style.display = 'none';
+      progressWrap.style.display = 'none';
+      summary.style.display = 'none';
+      downloadZipBtn.style.display = 'none';
+    });
+
+    function loadImage(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('load fail')); };
+        img.src = url;
+      });
+    }
+
+    function compressOne(file, quality, mime, maxW) {
+      return loadImage(file).then(img => {
+        let w = img.naturalWidth;
+        let h = img.naturalHeight;
+        if (maxW > 0 && w > maxW) {
+          h = Math.round(h * maxW / w);
+          w = maxW;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        if (mime === 'image/jpeg' || mime === 'image/webp') {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, w, h);
+        }
+        ctx.drawImage(img, 0, 0, w, h);
+        return new Promise(resolve => {
+          canvas.toBlob(blob => resolve(blob), mime, quality);
+        });
+      });
+    }
+
+    compressBtn.addEventListener('click', async () => {
+      if (!files.length) return;
+      compressBtn.disabled = true;
+      clearBtn.disabled = true;
+      progressWrap.style.display = 'block';
+      downloadZipBtn.style.display = 'none';
+      summary.style.display = 'none';
+      results = [];
+
+      const quality = parseInt(qualityEl.value, 10) / 100;
+      const mime = formatEl.value;
+      const maxW = parseInt(maxWidthEl.value, 10) || 0;
+      const ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
+
+      let totalOriginal = 0;
+      let totalNew = 0;
+      let done = 0;
+
+      for (let i = 0; i < files.length; i++) {
+        const item = files[i];
+        item.status = '…';
+        renderList();
+        progressFill.style.width = ((i / files.length) * 100) + '%';
+        progressText.textContent = i + ' / ' + files.length;
+
+        try {
+          const blob = await compressOne(item.file, quality, mime, maxW);
+          if (!blob) throw new Error('empty');
+          totalOriginal += item.size;
+          totalNew += blob.size;
+          const base = item.name.replace(/\.[^.]+$/, '');
+          results.push({ name: base + '.' + ext, blob });
+          item.status = formatSize(blob.size);
+        } catch (e) {
+          item.status = 'error';
+        }
+        done++;
+        renderList();
+      }
+
+      progressFill.style.width = '100%';
+      progressText.textContent = done + ' / ' + files.length + ' done';
+
+      const saved = totalOriginal > 0 ? Math.round((1 - totalNew / totalOriginal) * 100) : 0;
+      summary.style.display = 'block';
+      summary.innerHTML = 'Total: <strong>' + formatSize(totalOriginal) + '</strong> → <strong>' + formatSize(totalNew) + '</strong> (' + (saved > 0 ? saved + '% smaller' : 'similar size') + ')';
+
+      if (results.length) downloadZipBtn.style.display = 'block';
+      compressBtn.disabled = false;
+      clearBtn.disabled = false;
+    });
+
+    downloadZipBtn.addEventListener('click', async () => {
+      if (!results.length) return;
+      downloadZipBtn.disabled = true;
+      downloadZipBtn.textContent = 'Building ZIP…';
+      const zip = new JSZip();
+      results.forEach(r => zip.file(r.name, r.blob));
+      const content = await zip.generateAsync({ type: 'blob' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(content);
+      a.download = 'compressed-images.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      downloadZipBtn.disabled = false;
+      downloadZipBtn.textContent = 'Download ZIP';
+    });
+  </script>
+</body>
+</html>
