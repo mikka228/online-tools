@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <link rel="canonical" href="https://mikka228.github.io/online-tools/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#8b5cf6" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <title>Free Online Tools — PDF, Image & Developer Utilities</title>
   <meta name="description" content="Free privacy-first browser tools. Merge, compress and split PDFs, compress and resize images, generate QR codes, format JSON and more. No signup, files never leave your device." />
   <meta property="og:title" content="Free Online Tools — PDF, Image & Developer Utilities" />
@@ -323,6 +326,24 @@
       .tools-grid { grid-template-columns: 1fr; }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Online Tools",
+    "url": "https://mikka228.github.io/online-tools/",
+    "description": "Free privacy-first browser tools for PDF, images and developers. Files never leave your device.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "browserRequirements": "Requires JavaScript"
+  }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -672,6 +693,14 @@
           } catch (e) {}
         });
       }
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function() {});
+      });
     }
   </script>
 </body>
