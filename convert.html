@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/convert.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Converter — JPG, PNG, WebP Free Online</title>
+  <meta name="description" content="Convert images between JPG, PNG and WebP in your browser. Free, private, no upload. Keep quality or compress." />
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #06b6d4; --accent-hover: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+    .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 14px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(6, 182, 212, 0.05); }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+    input[type="file"] { display: none; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; font-weight: 500; }
+    select, input[type="number"] {
+      width: 100%; background: #09090b; border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.75rem 0.95rem; color: var(--text); font-size: 1rem; outline: none; margin-bottom: 0.9rem;
+    }
+    select:focus, input:focus { border-color: var(--accent); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--accent); color: #09090b; border: none; border-radius: 12px;
+      padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .preview-wrap { text-align: center; margin-top: 1rem; }
+    .preview-wrap img { max-width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+    .info { font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; }
+    .privacy { font-size: 0.85rem; color: #71717a; text-align: center; margin-top: 1rem; }
+    .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .related-links a { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.75rem; color: var(--text); text-decoration: none; font-size: 0.85rem; }
+    .related-links a:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .content-block { margin-top: 2.5rem; padding: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 18px; line-height: 1.65; }
+    .content-block h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>Image Converter</h1>
+    <p class="subtitle">Convert between JPG, PNG and WebP. Private & free.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">🔄</div>
+        <strong>Click or drop an image</strong>
+        <p>JPG, PNG, WebP · up to 20 MB</p>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/*" />
+      </div>
+
+      <div id="settings" style="display:none; margin-top:1.25rem;">
+        <div class="row">
+          <div>
+            <label for="format">Convert to</label>
+            <select id="format">
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </div>
+          <div>
+            <label for="quality">Quality (JPEG / WebP)</label>
+            <input type="number" id="quality" min="10" max="100" value="90" />
+          </div>
+        </div>
+
+        <button class="btn" id="convertBtn">Convert & Download</button>
+        <p class="privacy">Your image never leaves this device</p>
+      </div>
+
+      <div class="preview-wrap" id="previewWrap" style="display:none;">
+        <img id="preview" alt="Preview" />
+        <div class="info" id="info"></div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <h2>What is Image Converter?</h2>
+      <p>Convert an image from one format to another (JPG ↔ PNG ↔ WebP) entirely in your browser. Useful when a site only accepts a specific format or when you want smaller WebP files.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Select or drop an image</li>
+        <li>Choose the target format</li>
+        <li>Adjust quality for JPEG/WebP if needed</li>
+        <li>Convert and download</li>
+      </ul>
+      <h2>Format tips</h2>
+      <ul>
+        <li><strong>JPEG</strong> — good for photos, smaller size</li>
+        <li><strong>PNG</strong> — lossless, keeps transparency</li>
+        <li><strong>WebP</strong> — often the smallest at similar quality</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Conversion uses the Canvas API on your device. Nothing is uploaded.</p>
+    </div>
+
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="compress.html">Image Compressor</a>
+        <a href="resize.html">Image Resizer</a>
+        <a href="jpg-to-pdf.html">Images to PDF</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const settings = document.getElementById('settings');
+    const formatEl = document.getElementById('format');
+    const qualityEl = document.getElementById('quality');
+    const convertBtn = document.getElementById('convertBtn');
+    const previewWrap = document.getElementById('previewWrap');
+    const preview = document.getElementById('preview');
+    const info = document.getElementById('info');
+
+    let originalFile = null;
+    let img = null;
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function handleFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image');
+        return;
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        alert('File is too large. Maximum is 20 MB.');
+        return;
+      }
+      originalFile = file;
+      const url = URL.createObjectURL(file);
+      img = new Image();
+      img.onload = () => {
+        preview.src = url;
+        previewWrap.style.display = 'block';
+        info.textContent = img.naturalWidth + ' × ' + img.naturalHeight + ' · ' + formatSize(file.size) + ' · ' + (file.type || 'image');
+        settings.style.display = 'block';
+
+        // Smart default: if PNG → offer WebP/JPEG, if JPEG → offer WebP/PNG
+        if (file.type === 'image/png') formatEl.value = 'image/webp';
+        else if (file.type === 'image/webp') formatEl.value = 'image/jpeg';
+        else formatEl.value = 'image/webp';
+      };
+      img.onerror = () => alert('Could not load image');
+      img.src = url;
+    }
+
+    convertBtn.addEventListener('click', () => {
+      if (!img) return;
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      const mime = formatEl.value;
+
+      if (mime === 'image/jpeg' || mime === 'image/webp') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      ctx.drawImage(img, 0, 0);
+
+      const quality = Math.min(100, Math.max(10, parseInt(qualityEl.value, 10) || 90)) / 100;
+
+      canvas.toBlob(function(blob) {
+        if (!blob) {
+          alert('Conversion failed');
+          convertBtn.disabled = false;
+          convertBtn.textContent = 'Convert & Download';
+          return;
+        }
+        const ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'converted.' + ext;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+
+        info.textContent = img.naturalWidth + ' × ' + img.naturalHeight + ' · ' + formatSize(blob.size) +
+          ' (was ' + formatSize(originalFile.size) + ') · ' + ext.toUpperCase();
+        convertBtn.disabled = false;
+        convertBtn.textContent = 'Convert & Download';
+      }, mime, quality);
+    });
+  </script>
+</body>
+</html>
