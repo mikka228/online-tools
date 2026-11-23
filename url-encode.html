@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/url-encode.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Encoder / Decoder — Free Online Tool</title>
+  <meta name="description" content="Encode and decode URL strings in your browser. Percent-encoding for query parameters and paths. Free, no signup." />
+  <style>
+    :root { --bg:#09090b; --card:#18181b; --border:#27272a; --text:#fafafa; --muted:#a1a1aa; --accent:#38bdf8; --accent-hover:#7dd3fc; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.5; }
+    .container { max-width:640px; margin:0 auto; padding:1.5rem 1.25rem 3rem; }
+    .back { display:inline-flex; color:var(--muted); text-decoration:none; font-size:0.9rem; margin-bottom:1.75rem; }
+    .back:hover { color:var(--accent-hover); }
+    h1 { font-size:1.85rem; font-weight:700; letter-spacing:-0.03em; margin-bottom:0.4rem; }
+    .subtitle { color:var(--muted); margin-bottom:2rem; font-size:1.05rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:1.5rem; margin-bottom:1.25rem; }
+    label { display:block; font-size:0.85rem; color:var(--muted); margin-bottom:0.4rem; font-weight:500; }
+    textarea {
+      width:100%; background:#09090b; border:1px solid var(--border); border-radius:12px;
+      padding:0.85rem 1rem; color:var(--text); font-size:0.95rem; outline:none; min-height:110px;
+      resize:vertical; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; margin-bottom:0.9rem;
+    }
+    textarea:focus { border-color:var(--accent); }
+    .actions { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.5rem; }
+    .btn {
+      border:none; border-radius:12px; padding:0.75rem 1.15rem; font-weight:600; font-size:0.95rem;
+      cursor:pointer; background:var(--accent); color:#09090b;
+    }
+    .btn:hover { background:var(--accent-hover); }
+    .btn-secondary { background:transparent; border:1px solid var(--border); color:var(--text); }
+    .btn-secondary:hover { border-color:var(--accent); background:rgba(56,189,248,0.1); }
+    .related { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+    .related h3 { font-size:0.95rem; color:var(--muted); margin-bottom:0.75rem; font-weight:500; }
+    .related-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .related-links a { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:0.4rem 0.75rem; color:var(--text); text-decoration:none; font-size:0.85rem; }
+    .related-links a:hover { border-color:var(--accent); color:var(--accent-hover); }
+    .content-block { margin-top:2.5rem; padding:1.5rem; background:var(--card); border:1px solid var(--border); border-radius:18px; line-height:1.65; }
+    .content-block h2 { font-size:1.15rem; font-weight:600; margin:1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top:0; }
+    .content-block p, .content-block li { color:var(--muted); font-size:0.95rem; margin-bottom:0.6rem; }
+    .content-block ul { padding-left:1.25rem; margin-bottom:0.75rem; }
+    .content-block strong { color:var(--text); font-weight:500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>URL Encoder / Decoder</h1>
+    <p class="subtitle">Percent-encode and decode URL strings</p>
+
+    <div class="card">
+      <label for="input">Input</label>
+      <textarea id="input" placeholder="https://example.com/path?q=hello world"></textarea>
+      <div class="actions">
+        <button class="btn" id="encodeBtn">Encode</button>
+        <button class="btn" id="decodeBtn">Decode</button>
+        <button class="btn btn-secondary" id="copyBtn">Copy result</button>
+        <button class="btn btn-secondary" id="clearBtn">Clear</button>
+      </div>
+      <label for="output">Result</label>
+      <textarea id="output" readonly placeholder="Result appears here"></textarea>
+    </div>
+
+    <div class="content-block">
+      <h2>What is URL encoding?</h2>
+      <p>URL encoding (percent-encoding) replaces unsafe characters with <code>%XX</code> sequences so they can be used safely in links and query strings.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Paste text or a full URL</li>
+        <li>Press <strong>Encode</strong> or <strong>Decode</strong></li>
+        <li>Copy the result</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Everything runs in your browser. Nothing is sent to a server.</p>
+    </div>
+
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="base64.html">Base64</a>
+        <a href="json.html">JSON Formatter</a>
+        <a href="text-case.html">Text Case</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    document.getElementById('encodeBtn').onclick = () => {
+      try { output.value = encodeURIComponent(input.value); }
+      catch (e) { output.value = 'Encode error'; }
+    };
+    document.getElementById('decodeBtn').onclick = () => {
+      try { output.value = decodeURIComponent(input.value); }
+      catch (e) { output.value = 'Decode error — invalid sequence'; }
+    };
+    document.getElementById('copyBtn').onclick = async () => {
+      if (!output.value) return;
+      try { await navigator.clipboard.writeText(output.value); } catch (e) {}
+    };
+    document.getElementById('clearBtn').onclick = () => { input.value = ''; output.value = ''; };
+  </script>
+</body>
+</html>
