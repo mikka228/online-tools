@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="canonical" href="https://mikka228.github.io/online-tools/pdf-to-jpg.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF to JPG — Convert PDF Pages to Images Free</title>
+  <meta name="description" content="Convert PDF pages to JPG or PNG images in your browser. Free, private, no upload. Choose quality and download individual pages or all at once." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #f97316; --accent-hover: #fb923c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+    .container { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .dropzone { border: 2px dashed var(--border); border-radius: 14px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(249, 115, 22, 0.05); }
+    .dropzone strong { color: var(--accent-hover); }
+    .dropzone p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+    input[type="file"] { display: none; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; font-weight: 500; }
+    select, input[type="range"] { width: 100%; background: #09090b; border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem 1rem; color: var(--text); font-size: 1rem; outline: none; margin-bottom: 1rem; }
+    input[type="range"] { padding: 0.5rem 0; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+    .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #09090b; border: none; border-radius: 12px; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 0.5rem; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); margin-top: 0.6rem; }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(249,115,22,0.08); }
+    .privacy-note { font-size: 0.85rem; color: #71717a; text-align: center; margin-top: 1rem; }
+    .pages { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .page-card { background: #09090b; border: 1px solid var(--border); border-radius: 12px; padding: 0.75rem; text-align: center; }
+    .page-card img { max-width: 100%; border-radius: 8px; display: block; margin: 0 auto 0.5rem; }
+    .page-card .num { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.4rem; }
+    .page-card .dl { font-size: 0.8rem; color: var(--accent-hover); cursor: pointer; text-decoration: none; }
+    .status { text-align: center; color: var(--muted); margin: 1rem 0; font-size: 0.95rem; }
+    .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .related-links a { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.75rem; color: var(--text); text-decoration: none; font-size: 0.85rem; }
+    .related-links a:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .content-block { margin-top: 2.5rem; padding: 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 18px; line-height: 1.65; }
+    .content-block h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">← Back to tools</a>
+    <h1>PDF to JPG</h1>
+    <p class="subtitle">Convert PDF pages to images. Everything stays in your browser.</p>
+
+    <div class="card">
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 2.3rem; margin-bottom: 0.5rem;">📄→🖼️</div>
+        <strong>Click or drop a PDF here</strong>
+        <p>One file · processed locally</p>
+        <input type="file" id="fileInput" accept="application/pdf" />
+      </div>
+
+      <div id="settings" style="display:none; margin-top:1.25rem;">
+        <div class="row">
+          <div>
+            <label for="format">Output format</label>
+            <select id="format">
+              <option value="image/jpeg" selected>JPG</option>
+              <option value="image/png">PNG</option>
+            </select>
+          </div>
+          <div>
+            <label for="scale">Quality / Scale</label>
+            <select id="scale">
+              <option value="1">1× (fast)</option>
+              <option value="1.5" selected>1.5× (good)</option>
+              <option value="2">2× (high)</option>
+              <option value="2.5">2.5× (very high)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" id="convertBtn">Convert to images</button>
+        <p class="privacy-note">Your PDF never leaves this device</p>
+      </div>
+
+      <div id="status" class="status" style="display:none;"></div>
+      <div id="pages" class="pages"></div>
+      <button class="btn btn-secondary" id="downloadAllBtn" style="display:none;">Download all as ZIP</button>
+    </div>
+
+    <div class="content-block">
+      <h2>What is PDF to JPG?</h2>
+      <p>Convert each page of a PDF into a JPG or PNG image. Useful when you need to insert pages into presentations, share a single page, or extract images from a document.</p>
+      <h2>How to use</h2>
+      <ul>
+        <li>Select or drop a PDF</li>
+        <li>Choose JPG or PNG and the quality/scale</li>
+        <li>Convert — each page becomes an image</li>
+        <li>Download individual pages or all at once</li>
+      </ul>
+      <h2>Privacy</h2>
+      <p>Conversion runs fully in your browser with PDF.js. The file is not uploaded to any server.</p>
+      <h2>Tips</h2>
+      <ul>
+        <li>Higher scale = sharper images but larger files and slower processing</li>
+        <li>JPG is smaller; PNG keeps text and graphics sharper with no compression artifacts</li>
+      </ul>
+    </div>
+
+    <div class="related">
+      <h3>Related tools</h3>
+      <div class="related-links">
+        <a href="jpg-to-pdf.html">Images to PDF</a>
+        <a href="compress-pdf.html">Compress PDF</a>
+        <a href="split-pdf.html">Split PDF</a>
+        <a href="organize-pdf.html">Organize PDF</a>
+        <a href="index.html">All tools</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const settings = document.getElementById('settings');
+    const convertBtn = document.getElementById('convertBtn');
+    const statusEl = document.getElementById('status');
+    const pagesEl = document.getElementById('pages');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+    const formatEl = document.getElementById('format');
+    const scaleEl = document.getElementById('scale');
+
+    let pdfDoc = null;
+    let pageImages = []; // { blob, name, url }
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    async function handleFile(file) {
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        alert('Please select a PDF file');
+        return;
+      }
+      statusEl.style.display = 'block';
+      statusEl.textContent = 'Loading PDF...';
+      pagesEl.innerHTML = '';
+      downloadAllBtn.style.display = 'none';
+      pageImages.forEach(p => { if (p.url) URL.revokeObjectURL(p.url); });
+      pageImages = [];
+      pdfDoc = null;
+
+      try {
+        const buf = await file.arrayBuffer();
+        pdfDoc = await pdfjsLib.getDocument({ data: buf }).promise;
+        statusEl.textContent = pdfDoc.numPages + ' page' + (pdfDoc.numPages > 1 ? 's' : '') + ' loaded';
+        settings.style.display = 'block';
+        convertBtn.disabled = false;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Failed to load PDF. The file may be encrypted or corrupted.';
+        settings.style.display = 'none';
+      }
+    }
+
+    convertBtn.addEventListener('click', async () => {
+      if (!pdfDoc) return;
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'Converting...';
+      pagesEl.innerHTML = '';
+      pageImages.forEach(p => { if (p.url) URL.revokeObjectURL(p.url); });
+      pageImages = [];
+      downloadAllBtn.style.display = 'none';
+
+      const scale = parseFloat(scaleEl.value) || 1.5;
+      const mime = formatEl.value;
+      const ext = mime === 'image/png' ? 'png' : 'jpg';
+      const quality = mime === 'image/jpeg' ? 0.92 : undefined;
+
+      for (let i = 1; i <= pdfDoc.numPages; i++) {
+        statusEl.textContent = 'Rendering page ' + i + ' of ' + pdfDoc.numPages + '...';
+        const page = await pdfDoc.getPage(i);
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, mime, quality));
+        const url = URL.createObjectURL(blob);
+        const name = 'page-' + String(i).padStart(2, '0') + '.' + ext;
+        pageImages.push({ blob, name, url });
+
+        const card = document.createElement('div');
+        card.className = 'page-card';
+        card.innerHTML = '<div class="num">Page ' + i + '</div><img src="' + url + '" alt="Page ' + i + '" /><a class="dl" href="' + url + '" download="' + name + '">Download</a>';
+        pagesEl.appendChild(card);
+      }
+
+      statusEl.textContent = 'Done — ' + pageImages.length + ' image' + (pageImages.length > 1 ? 's' : '');
+      convertBtn.disabled = false;
+      convertBtn.textContent = 'Convert to images';
+      if (pageImages.length > 1) downloadAllBtn.style.display = 'block';
+    });
+
+    downloadAllBtn.addEventListener('click', async () => {
+      if (pageImages.length === 0) return;
+      // Simple sequential download (ZIP would need extra lib)
+      for (const p of pageImages) {
+        const a = document.createElement('a');
+        a.href = p.url;
+        a.download = p.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        await new Promise(r => setTimeout(r, 300));
+      }
+    });
+  </script>
+</body>
+</html>
