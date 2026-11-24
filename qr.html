@@ -5,200 +5,9 @@
   <link rel="canonical" href="https://mikka228.github.io/online-tools/qr.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Code Generator — Free Online QR Maker</title>
-  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration." />
-  <script src="vendor/qrcode.min.js"></script>
-  <style>
-    :root {
-      --bg: #09090b;
-      --card: #18181b;
-      --border: #27272a;
-      --text: #fafafa;
-      --muted: #a1a1aa;
-      --accent: #8b5cf6;
-      --accent-hover: #a78bfa;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 3rem;
-    }
-    .back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin-bottom: 1.75rem;
-    }
-    .back:hover { color: var(--accent-hover); }
-    h1 {
-      font-size: 1.85rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.4rem;
-    }
-    .subtitle {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      font-size: 1.05rem;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-    label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-      font-weight: 500;
-    }
-    input, select, textarea {
-      width: 100%;
-      background: #09090b;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 0.8rem 1rem;
-      color: var(--text);
-      font-size: 1rem;
-      margin-bottom: 1.15rem;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-    }
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    @media (max-width: 520px) {
-      .row { grid-template-columns: 1fr; }
-    }
-    .preview {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    #qrcode {
-      background: white;
-      padding: 18px;
-      border-radius: 16px;
-      line-height: 0;
-      min-height: 200px;
-      min-width: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #qrcode canvas, #qrcode img, #qrcode svg {
-      display: block;
-      max-width: 100%;
-    }
-    .btn-row {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 0.9rem 1.4rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn:hover { background: var(--accent-hover); }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      background: rgba(139, 92, 246, 0.1);
-    }
-  
-    .related {
-      margin-top: 2.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-    }
-    .related h3 {
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-      font-weight: 500;
-    }
-    .related-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .related-links a {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.4rem 0.75rem;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.85rem;
-    }
-    .related-links a:hover {
-      border-color: var(--accent);
-      color: var(--accent-hover);
-    }
-
-  
-    .content-block {
-      margin-top: 2.5rem;
-      padding: 1.5rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      line-height: 1.65;
-    }
-    .content-block h2 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin: 1.5rem 0 0.6rem;
-      letter-spacing: -0.02em;
-    }
-    .content-block h2:first-child { margin-top: 0; }
-    .content-block p, .content-block li {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-    }
-    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
-    .content-block strong { color: var(--text); font-weight: 500; }
-
-  </style>
+  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG. Works in your browser, no registration." />
   <meta property="og:title" content="QR Code Generator — Free Online QR Maker" />
-  <meta property="og:description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration." />
+  <meta property="og:description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG. Works in your browser, no registration." />
   <meta property="og:url" content="https://mikka228.github.io/online-tools/qr.html" />
   <meta property="og:type" content="website" />
   <script type="application/ld+json">
@@ -207,201 +16,228 @@
     "@type": "WebApplication",
     "name": "QR Code Generator",
     "url": "https://mikka228.github.io/online-tools/qr.html",
-    "description": "Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration.",
+    "description": "Create free QR codes for links, text and Wi-Fi in your browser.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   }
   </script>
+  <style>
+    :root {
+      --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
+      --muted: #a1a1aa; --accent: #8b5cf6; --accent-hover: #a78bfa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5;
+    }
+    .container { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    .back { display: inline-flex; color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-bottom: 1.75rem; }
+    .back:hover { color: var(--accent-hover); }
+    h1 { font-size: 1.85rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; font-weight: 500; }
+    input, select, textarea {
+      width: 100%; background: #09090b; border: 1px solid var(--border); border-radius: 12px;
+      padding: 0.8rem 1rem; color: var(--text); font-size: 1rem; margin-bottom: 1.15rem; outline: none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { min-height: 100px; resize: vertical; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+    .preview { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+    #qrcode {
+      background: white; padding: 18px; border-radius: 16px; line-height: 0;
+      min-height: 200px; min-width: 200px; display: flex; align-items: center; justify-content: center;
+    }
+    #qrcode img, #qrcode canvas { display: block; max-width: 100%; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--accent); color: white; border: none; border-radius: 12px;
+      padding: 0.9rem 1.4rem; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .error { color: #f87171; font-size: 0.9rem; text-align: center; margin-top: 0.75rem; }
+    .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
+    .related-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .related-links a {
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.4rem 0.75rem; color: var(--text); text-decoration: none; font-size: 0.85rem;
+    }
+    .related-links a:hover { border-color: var(--accent); color: var(--accent-hover); }
+    .content-block {
+      margin-top: 2.5rem; padding: 1.5rem; background: var(--card);
+      border: 1px solid var(--border); border-radius: 18px; line-height: 1.65;
+    }
+    .content-block h2 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.6rem; }
+    .content-block h2:first-child { margin-top: 0; }
+    .content-block p, .content-block li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .content-block ul { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .content-block strong { color: var(--text); font-weight: 500; }
+  </style>
 </head>
 <body>
   <div class="container">
     <a href="index.html" class="back">← Back to tools</a>
     <h1>QR Code Generator</h1>
-    <p class="subtitle">Create a QR code in seconds · PNG & SVG</p>
+    <p class="subtitle">Create QR codes for links, text and Wi-Fi. Download as PNG.</p>
 
     <div class="card">
       <label for="text">Text or URL</label>
-      <textarea id="text" placeholder="https://example.com or any text">https://github.com/mikka228/online-tools</textarea>
+      <textarea id="text" placeholder="https://example.com">https://mikka228.github.io/online-tools/</textarea>
 
       <div class="row">
         <div>
-          <label for="size">Size</label>
+          <label for="size">Size (px)</label>
           <select id="size">
-            <option value="200">200 × 200</option>
-            <option value="256" selected>256 × 256</option>
-            <option value="300">300 × 300</option>
-            <option value="400">400 × 400</option>
-            <option value="512">512 × 512</option>
+            <option value="128">128</option>
+            <option value="192">192</option>
+            <option value="256" selected>256</option>
+            <option value="320">320</option>
+            <option value="512">512</option>
           </select>
         </div>
         <div>
-          <label for="colorDark">QR Color</label>
-          <input type="color" id="colorDark" value="#000000" style="padding: 0.35rem; height: 48px;" />
+          <label for="errorCorrection">Error correction</label>
+          <select id="errorCorrection">
+            <option value="L">L — ~7%</option>
+            <option value="M" selected>M — ~15%</option>
+            <option value="Q">Q — ~25%</option>
+            <option value="H">H — ~30%</option>
+          </select>
         </div>
       </div>
 
       <div class="row">
+        <div>
+          <label for="colorDark">Foreground</label>
+          <input type="color" id="colorDark" value="#000000" />
+        </div>
         <div>
           <label for="colorLight">Background</label>
-          <input type="color" id="colorLight" value="#ffffff" style="padding: 0.35rem; height: 48px;" />
+          <input type="color" id="colorLight" value="#ffffff" />
         </div>
-        <div>
-          <label for="errorCorrection">Error Correction</label>
-          <select id="errorCorrection">
-            <option value="L">Low (L)</option>
-            <option value="M" selected>Medium (M)</option>
-            <option value="Q">Quartile (Q)</option>
-            <option value="H">High (H)</option>
-          </select>
+      </div>
+
+      <div class="preview">
+        <div id="qrcode"></div>
+        <div class="btn-row">
+          <button type="button" class="btn" id="downloadPngBtn">Download PNG</button>
         </div>
+        <p class="error" id="errorMsg" style="display:none;"></p>
       </div>
     </div>
 
-    <div class="card preview">
-      <div id="qrcode"></div>
-      <div class="btn-row">
-        <button class="btn" id="downloadPngBtn">Download PNG</button>
-        <button class="btn btn-secondary" id="downloadSvgBtn">Download SVG</button>
-      </div>
-    </div>
-  
-    
     <div class="content-block">
-      <h2>What is a QR Code Generator?</h2>
-      <p>A QR code stores text, a website URL, or Wi-Fi login details in a square pattern that phones can scan. This generator builds the code in your browser and lets you download a PNG or SVG — useful for menus, event check-in, product packaging, or sharing a link without typing.</p>
-
-      <h2>How to create a QR code</h2>
+      <h2>What is a QR code generator?</h2>
+      <p>Create a QR code from any text or URL and download it as a PNG image. Everything runs in your browser.</p>
+      <h2>How to use</h2>
       <ul>
-        <li>Enter a URL, plain text, or Wi-Fi details</li>
-        <li>Optionally change foreground/background colors and size</li>
-        <li>Download the PNG (raster) or SVG (vector, scalable)</li>
+        <li>Enter a link or text</li>
+        <li>Choose size, colors and error correction</li>
+        <li>Download the PNG</li>
       </ul>
-
-      <h2>Tips for reliable scans</h2>
-      <ul>
-        <li>Keep enough contrast between dark modules and light background</li>
-        <li>Do not stretch the image; scale it proportionally</li>
-        <li>Leave a quiet margin (white space) around the code when placing it on a design</li>
-        <li>Prefer SVG for print and high-resolution needs</li>
-      </ul>
-
       <h2>Privacy</h2>
-      <p>Your text never leaves the device. The code is drawn locally with a client-side library.</p>
-
+      <p>Generation happens entirely on your device. Nothing is uploaded.</p>
       <h2>FAQ</h2>
-      <p><strong>Can I make a Wi-Fi QR code?</strong><br>Yes — use the format <code>WIFI:T:WPA;S:NetworkName;P:password;;</code> in the text field.</p>
-      <p><strong>Is the PNG high enough resolution for print?</strong><br>Choose a larger size before download, or use SVG for perfect scaling.</p>
+      <p><strong>Can I make a Wi-Fi QR?</strong><br>Yes. Use the format: <code>WIFI:T:WPA;S:NetworkName;P:Password;;</code></p>
+      <p><strong>Why error correction?</strong><br>Higher levels survive more damage or logo overlays, but make denser codes.</p>
+      <p><strong>Is this private?</strong><br>Yes. The library runs locally from our site, not from a third-party CDN.</p>
     </div>
 
     <div class="related">
       <h3>Related tools</h3>
       <div class="related-links">
         <a href="password.html">Password Generator</a>
-        <a href="signature.html">Email Signature</a>
-        <a href="text-case.html">Text Case</a>
         <a href="base64.html">Base64</a>
+        <a href="url-encode.html">URL Encoder</a>
         <a href="index.html">All tools</a>
       </div>
     </div>
-
   </div>
 
+  <script src="vendor/qrcodejs.min.js"></script>
   <script>
-    const textEl = document.getElementById('text');
-    const sizeEl = document.getElementById('size');
-    const colorDarkEl = document.getElementById('colorDark');
-    const colorLightEl = document.getElementById('colorLight');
-    const errorCorrectionEl = document.getElementById('errorCorrection');
-    const qrcodeEl = document.getElementById('qrcode');
-    const downloadPngBtn = document.getElementById('downloadPngBtn');
-    const downloadSvgBtn = document.getElementById('downloadSvgBtn');
+    (function () {
+      var textEl = document.getElementById('text');
+      var sizeEl = document.getElementById('size');
+      var colorDarkEl = document.getElementById('colorDark');
+      var colorLightEl = document.getElementById('colorLight');
+      var errorCorrectionEl = document.getElementById('errorCorrection');
+      var qrcodeEl = document.getElementById('qrcode');
+      var downloadPngBtn = document.getElementById('downloadPngBtn');
+      var errorMsg = document.getElementById('errorMsg');
+      var qrInstance = null;
 
-    let currentSvg = '';
-
-    function generate() {
-      if (typeof QRCode === 'undefined') {
-        qrcodeEl.innerHTML = '<span style="color:#a1a1aa;font-size:0.9rem;">Loading library…</span>';
-        setTimeout(generate, 200);
-        return;
+      function showError(msg) {
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = msg;
       }
-      const text = textEl.value.trim() || ' ';
-      const size = parseInt(sizeEl.value, 10);
-      const colorDark = colorDarkEl.value;
-      const colorLight = colorLightEl.value;
-      const errorCorrection = errorCorrectionEl.value;
+      function clearError() {
+        errorMsg.style.display = 'none';
+        errorMsg.textContent = '';
+      }
 
-      qrcodeEl.innerHTML = '';
-
-      // Canvas for preview + PNG
-      QRCode.toCanvas(document.createElement('canvas'), text, {
-        width: size,
-        margin: 2,
-        color: {
-          dark: colorDark,
-          light: colorLight
-        },
-        errorCorrectionLevel: errorCorrection
-      }, function (err, canvas) {
-        if (err) {
-          qrcodeEl.textContent = 'Error generating QR';
+      function generate() {
+        clearError();
+        if (typeof QRCode === 'undefined') {
+          showError('QR library failed to load. Hard-refresh the page (Ctrl+Shift+R).');
           return;
         }
-        qrcodeEl.appendChild(canvas);
+        var text = textEl.value.trim();
+        if (!text) text = ' ';
+        var size = parseInt(sizeEl.value, 10) || 256;
+        qrcodeEl.innerHTML = '';
+        try {
+          qrInstance = new QRCode(qrcodeEl, {
+            text: text,
+            width: size,
+            height: size,
+            colorDark: colorDarkEl.value,
+            colorLight: colorLightEl.value,
+            correctLevel: QRCode.CorrectLevel[errorCorrectionEl.value] || QRCode.CorrectLevel.M
+          });
+        } catch (e) {
+          console.error(e);
+          showError('Could not generate QR code');
+        }
+      }
+
+      ['input', 'change'].forEach(function (evt) {
+        [textEl, sizeEl, colorDarkEl, colorLightEl, errorCorrectionEl].forEach(function (el) {
+          el.addEventListener(evt, generate);
+        });
       });
 
-      // SVG string for download
-      QRCode.toString(text, {
-        type: 'svg',
-        width: size,
-        margin: 2,
-        color: {
-          dark: colorDark,
-          light: colorLight
-        },
-        errorCorrectionLevel: errorCorrection
-      }, function (err, svg) {
-        if (!err) currentSvg = svg;
+      downloadPngBtn.addEventListener('click', function () {
+        var canvas = qrcodeEl.querySelector('canvas');
+        var img = qrcodeEl.querySelector('img');
+        var dataUrl = null;
+        if (canvas) dataUrl = canvas.toDataURL('image/png');
+        else if (img && img.src) dataUrl = img.src;
+        if (!dataUrl) {
+          showError('QR code is not ready yet');
+          return;
+        }
+        var link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'qrcode.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       });
-    }
 
-    [textEl, sizeEl, colorDarkEl, colorLightEl, errorCorrectionEl].forEach(el => {
-      el.addEventListener('input', generate);
-      el.addEventListener('change', generate);
-    });
-
-    generate();
-
-    downloadPngBtn.addEventListener('click', function() {
-      var canvas = qrcodeEl.querySelector('canvas');
-      if (!canvas) {
-        alert('QR code is not ready yet');
-        return;
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', generate);
+      } else {
+        generate();
       }
-      var dataUrl = canvas.toDataURL('image/png');
-      var link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'qrcode.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-
-    downloadSvgBtn.addEventListener('click', function() {
-      if (!currentSvg) {
-        alert('QR code is not ready yet');
-        return;
-      }
-      var blob = new Blob([currentSvg], { type: 'image/svg+xml' });
-      var url = URL.createObjectURL(blob);
-      var link = document.createElement('a');
-      link.href = url;
-      link.download = 'qrcode.svg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
-    });
+    })();
   </script>
   <script src="recent.js"></script>
 </body>
