@@ -1,5 +1,5 @@
 /* Online Tools service worker — self-hosted assets, full offline */
-const SHELL_CACHE = 'ot-shell-v4';
+const SHELL_CACHE = 'ot-shell-v5';
 const CACHE_PREFIX = 'ot-';
 
 const SHELL = [
@@ -35,6 +35,7 @@ const SHELL = [
   './url-encode.html',
   './uuid.html',
   './vendor/qrcode.min.js',
+  './vendor/qrcodejs.min.js',
   './vendor/pdf-lib.min.js',
   './vendor/jszip.min.js',
   './vendor/pdf.min.js',
