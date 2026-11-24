@@ -46,6 +46,8 @@ See [Privacy & Security](https://mikka228.github.io/online-tools/privacy.html) f
 | [Password Generator](https://mikka228.github.io/online-tools/password.html) | Generate strong passwords |
 | [Email Signature](https://mikka228.github.io/online-tools/signature.html) | Create email signatures |
 | [Lorem Ipsum](https://mikka228.github.io/online-tools/lorem.html) | Placeholder text |
+| [URL Encoder / Decoder](https://mikka228.github.io/online-tools/url-encode.html) | Percent-encode and decode URLs |
+| [UUID Generator](https://mikka228.github.io/online-tools/uuid.html) | Generate UUID v4 identifiers |
 
 ## Libraries
 
