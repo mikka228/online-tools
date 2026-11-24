@@ -7,6 +7,7 @@
   <title>PDF to JPG — Convert PDF Pages to Images Free</title>
   <meta name="description" content="Convert PDF pages to JPG or PNG images in your browser. Free, private, no upload. Choose quality and download individual pages or all at once." />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <style>
     :root {
       --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
@@ -224,16 +225,25 @@
 
     downloadAllBtn.addEventListener('click', async () => {
       if (pageImages.length === 0) return;
-      // Simple sequential download (ZIP would need extra lib)
-      for (const p of pageImages) {
+      downloadAllBtn.disabled = true;
+      downloadAllBtn.textContent = 'Building ZIP…';
+      try {
+        const zip = new JSZip();
+        pageImages.forEach(p => zip.file(p.name, p.blob));
+        const content = await zip.generateAsync({ type: 'blob' });
         const a = document.createElement('a');
-        a.href = p.url;
-        a.download = p.name;
+        a.href = URL.createObjectURL(content);
+        a.download = 'pdf-pages.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        await new Promise(r => setTimeout(r, 300));
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+      } catch (e) {
+        console.error(e);
+        alert('Could not create ZIP');
       }
+      downloadAllBtn.disabled = false;
+      downloadAllBtn.textContent = 'Download all as ZIP';
     });
   </script>
 </body>
