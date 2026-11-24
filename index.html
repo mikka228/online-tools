@@ -160,9 +160,19 @@
       cursor: pointer;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
     }
     .category-header:hover {
       background: rgba(255,255,255,0.02);
+    }
+    .category-header:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
     }
     .cat-icon {
       font-size: 1.25rem;
@@ -381,12 +391,12 @@
     <div id="categories">
 
             <div class="category open" data-cat="pdf">
-        <div class="category-header" data-toggle>
+        <button type="button" class="category-header" data-toggle aria-expanded="true">
           <span class="cat-icon">📑</span>
           <span class="cat-title">PDF Tools</span>
           <span class="cat-count">7</span>
           <span class="cat-arrow">▼</span>
-        </div>
+        </button>
         <div class="category-body">
           <div class="tools-grid">
             <a href="merge-pdf.html" class="tool-card" data-name="merge pdf" data-keywords="combine join pdf files" data-tool="merge-pdf">
@@ -429,12 +439,12 @@
       </div>
 
             <div class="category" data-cat="image">
-        <div class="category-header" data-toggle>
+        <button type="button" class="category-header" data-toggle aria-expanded="false">
           <span class="cat-icon">🖼️</span>
           <span class="cat-title">Image Tools</span>
           <span class="cat-count">5</span>
           <span class="cat-arrow">▼</span>
-        </div>
+        </button>
         <div class="category-body">
           <div class="tools-grid">
             <a href="compress.html" class="tool-card" data-name="image compressor compress" data-keywords="photo reduce size jpeg webp png" data-tool="image-compressor">
@@ -467,12 +477,12 @@
       </div>
 
       <div class="category" data-cat="text">
-        <div class="category-header" data-toggle>
+        <button type="button" class="category-header" data-toggle aria-expanded="false">
           <span class="cat-icon">🛠</span>
           <span class="cat-title">Text & Developer Tools</span>
           <span class="cat-count">9</span>
           <span class="cat-arrow">▼</span>
-        </div>
+        </button>
         <div class="category-body">
           <div class="tools-grid">
             <a href="json.html" class="tool-card" data-name="json formatter" data-keywords="format minify validate json" data-tool="json">
@@ -553,10 +563,12 @@
   </div>
 
   <script>
-    // Category toggle
+    // Category toggle (accessible)
     document.querySelectorAll('[data-toggle]').forEach(function(header) {
       header.addEventListener('click', function() {
-        header.parentElement.classList.toggle('open');
+        var cat = header.parentElement;
+        var open = cat.classList.toggle('open');
+        header.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     });
 
@@ -588,6 +600,16 @@
 
       noResults.style.display = (q && !anyVisible) ? 'block' : 'none';
       document.getElementById('categories').style.display = (q && !anyVisible) ? 'none' : 'block';
+
+      // When search cleared, restore default open state (PDF open, others closed)
+      if (!q) {
+        document.querySelectorAll('.category').forEach(function(cat) {
+          var shouldOpen = cat.getAttribute('data-cat') === 'pdf';
+          cat.classList.toggle('open', shouldOpen);
+          var btn = cat.querySelector('[data-toggle]');
+          if (btn) btn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        });
+      }
     }
 
     searchInput.addEventListener('input', runSearch);
@@ -680,12 +702,12 @@
       section.style.display = 'block';
     }
 
-    // Track clicks on tools
-    document.querySelectorAll('[data-tool]').forEach(function(el) {
-      el.addEventListener('click', function() {
-        var id = el.getAttribute('data-tool');
-        if (id) saveRecent(id);
-      });
+    // Event delegation so dynamically created Recent links also track clicks
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest('[data-tool]');
+      if (!el) return;
+      var id = el.getAttribute('data-tool');
+      if (id) saveRecent(id);
     });
 
     renderRecent();
