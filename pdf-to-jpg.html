@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PDF to JPG — Convert PDF Pages to Images Free</title>
   <meta name="description" content="Convert PDF pages to JPG or PNG images in your browser. Free, private, no upload. Choose quality and download individual pages or all at once." />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="vendor/pdf.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
   <style>
     :root {
       --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
@@ -151,7 +151,7 @@
 
   <script>
     // PDF.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
 
     const dropzone = document.getElementById('dropzone');
     const fileInput = document.getElementById('fileInput');
