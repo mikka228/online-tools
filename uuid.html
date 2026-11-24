@@ -47,6 +47,22 @@
     .content-block ul { padding-left:1.25rem; margin-bottom:0.75rem; }
     .content-block strong { color:var(--text); font-weight:500; }
   </style>
+  <meta property="og:title" content="UUID Generator — Free Online UUID v4" />
+  <meta property="og:description" content="Generate UUID v4 identifiers in your browser. Create one or many UUIDs, copy with one click. Free, no signup." />
+  <meta property="og:url" content="https://mikka228.github.io/online-tools/uuid.html" />
+  <meta property="og:type" content="website" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "UUID Generator",
+    "url": "https://mikka228.github.io/online-tools/uuid.html",
+    "description": "Generate UUID v4 identifiers in your browser. Create one or many UUIDs, copy with one click. Free, no signup.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -77,6 +93,13 @@
       </ul>
       <h2>Privacy</h2>
       <p>Generation uses the browser’s crypto API when available. Nothing is sent to a server.</p>
+    </div>
+
+        <div class="content-block">
+      <h2>FAQ</h2>
+      <p><strong>What version is generated?</strong><br>UUID version 4 (random), using the browser crypto API when available.</p>
+      <p><strong>Can I generate many at once?</strong><br>Yes. Set the count from 1 to 100.</p>
+      <p><strong>Are UUIDs stored on your servers?</strong><br>No. Generation is fully client-side.</p>
     </div>
 
     <div class="related">
