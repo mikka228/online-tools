@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Organize PDF Online Free — Rotate, Reorder, Delete Pages</title>
   <meta name="description" content="Organize PDF pages: reorder, rotate, delete. 100% in your browser, free, no registration, no upload." />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="vendor/pdf.min.js"></script>
   <style>
     :root {
       --bg: #09090b; --card: #18181b; --border: #27272a; --text: #fafafa;
@@ -193,7 +193,7 @@
 
   <script>
     // pdf.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
 
     const { PDFDocument, degrees } = PDFLib;
     const dropzone = document.getElementById('dropzone');
