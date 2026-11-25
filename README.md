@@ -51,12 +51,15 @@ See [Privacy & Security](https://mikka228.github.io/online-tools/privacy.html) f
 
 ## Libraries
 
-Client-side only, loaded from public CDNs where needed:
+Client-side only. Libraries are **self-hosted** in this repository under `vendor/` (no third-party CDN required to run the tools):
 
 - [pdf-lib](https://pdf-lib.js.org/) — PDF create / modify
 - [PDF.js](https://mozilla.github.io/pdf.js/) — PDF rendering
 - [JSZip](https://stuk.github.io/jszip/) — ZIP archives
-- QR code libraries for generation
+- [jsPDF](https://github.com/parallax/jsPDF) — PDF from images
+- QR code library (bundled on the QR page)
+
+Your files are processed in the browser and are not uploaded to our servers.
 
 ## Support
 
