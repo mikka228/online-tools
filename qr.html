@@ -5,9 +5,9 @@
   <link rel="canonical" href="https://mikka228.github.io/online-tools/qr.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Code Generator — Free Online QR Maker</title>
-  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG. Works in your browser, no registration." />
+  <meta name="description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration." />
   <meta property="og:title" content="QR Code Generator — Free Online QR Maker" />
-  <meta property="og:description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG. Works in your browser, no registration." />
+  <meta property="og:description" content="Create free QR codes for links, text and Wi-Fi. Customize colors and download as PNG or SVG. Works in your browser, no registration." />
   <meta property="og:url" content="https://mikka228.github.io/online-tools/qr.html" />
   <meta property="og:type" content="website" />
   <script type="application/ld+json">
@@ -61,6 +61,8 @@
     }
     .btn:hover { background: var(--accent-hover); }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(139, 92, 246, 0.1); }
     .error { color: #f87171; font-size: 0.9rem; text-align: center; margin-top: 0.75rem; }
     .related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
     .related h3 { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.75rem; font-weight: 500; }
@@ -85,7 +87,7 @@
   <div class="container">
     <a href="index.html" class="back">← Back to tools</a>
     <h1>QR Code Generator</h1>
-    <p class="subtitle">Create QR codes for links, text and Wi-Fi. Download as PNG.</p>
+    <p class="subtitle">Create QR codes for links, text and Wi-Fi. Download as PNG or SVG.</p>
 
     <div class="card">
       <label for="text">Text or URL</label>
@@ -128,26 +130,34 @@
         <div id="qrcode"></div>
         <div class="btn-row">
           <button type="button" class="btn" id="downloadPngBtn">Download PNG</button>
+          <button type="button" class="btn btn-secondary" id="downloadSvgBtn">Download SVG</button>
         </div>
         <p class="error" id="errorMsg" style="display:none;"></p>
       </div>
     </div>
 
     <div class="content-block">
-      <h2>What is a QR code generator?</h2>
-      <p>Create a QR code from any text or URL and download it as a PNG image. Everything runs in your browser.</p>
-      <h2>How to use</h2>
+      <h2>What is a QR Code?</h2>
+      <p>A QR code is a two-dimensional barcode that stores text, links, Wi-Fi credentials or other data. Phones scan it with the camera and open the encoded content instantly.</p>
+      <h2>How to Generate a QR Code</h2>
       <ul>
-        <li>Enter a link or text</li>
-        <li>Choose size, colors and error correction</li>
-        <li>Download the PNG</li>
+        <li>Paste a URL or any text into the field</li>
+        <li>Pick size, foreground/background colors and error correction</li>
+        <li>The preview updates live in your browser</li>
+      </ul>
+      <h2>How to Download and Use QR Codes</h2>
+      <ul>
+        <li><strong>PNG</strong> — ideal for chats, presentations and the web</li>
+        <li><strong>SVG</strong> — scales cleanly for print and design work</li>
+        <li>For Wi-Fi codes use: <code>WIFI:T:WPA;S:NetworkName;P:Password;;</code></li>
       </ul>
       <h2>Privacy</h2>
-      <p>Generation happens entirely on your device. Nothing is uploaded.</p>
+      <p>Generation runs entirely on your device. The QR library is bundled on this page. Nothing is uploaded to our servers.</p>
       <h2>FAQ</h2>
       <p><strong>Can I make a Wi-Fi QR?</strong><br>Yes. Use the format: <code>WIFI:T:WPA;S:NetworkName;P:Password;;</code></p>
+      <p><strong>PNG or SVG?</strong><br>PNG is universal. SVG is better when you need sharp print or large sizes without quality loss.</p>
       <p><strong>Why error correction?</strong><br>Higher levels survive more damage or logo overlays, but make denser codes.</p>
-      <p><strong>Is this private?</strong><br>Yes. The library runs locally from our site, not from a third-party CDN.</p>
+      <p><strong>Is this private?</strong><br>Yes. Processing stays in your browser; no third-party CDN is required.</p>
     </div>
 
     <div class="related">
@@ -234,7 +244,57 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         document.body.removeChild(link);
       });
 
-      if (document.readyState === 'loading') {
+
+      function canvasToSvg(canvas, colorDark) {
+        var w = canvas.width, h = canvas.height;
+        var ctx = canvas.getContext('2d');
+        var data = ctx.getImageData(0, 0, w, h).data;
+        var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'];
+        parts.push('<rect width="100%" height="100%" fill="#ffffff"/>');
+        for (var y = 0; y < h; y++) {
+          for (var x = 0; x < w; x++) {
+            var i = (y * w + x) * 4;
+            if (data[i] < 128) {
+              parts.push('<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+colorDark+'"/>');
+            }
+          }
+        }
+        parts.push('</svg>');
+        return parts.join('');
+      }
+
+      var downloadSvgBtn = document.getElementById('downloadSvgBtn');
+      if (downloadSvgBtn) {
+        downloadSvgBtn.addEventListener('click', function () {
+          var canvas = qrcodeEl.querySelector('canvas');
+          if (!canvas) {
+            // try draw image to canvas
+            var img = qrcodeEl.querySelector('img');
+            if (!img) { showError('QR code is not ready yet'); return; }
+            canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth || img.width;
+            canvas.height = img.naturalHeight || img.height;
+            canvas.getContext('2d').drawImage(img, 0, 0);
+          }
+          try {
+            var svg = canvasToSvg(canvas, colorDarkEl.value);
+            var blob = new Blob([svg], { type: 'image/svg+xml' });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = 'qrcode.svg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+          } catch (e) {
+            console.error(e);
+            showError('Could not export SVG');
+          }
+        });
+      }
+
+            if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', generate);
       } else {
         generate();
