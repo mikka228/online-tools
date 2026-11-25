@@ -219,7 +219,7 @@
       info.textContent = 'Loading PDF...';
       try {
         const arrayBuffer = await file.arrayBuffer();
-        pdfDoc = await PDFDocument.load(arrayBuffer);
+        pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
         const count = pdfDoc.getPageCount();
         fileName.textContent = file.name;
         pageCount.textContent = count + ' page' + (count !== 1 ? 's' : '');
