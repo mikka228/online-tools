@@ -39,7 +39,7 @@
   <div class="container">
     <a href="index.html" class="back">← Back to tools</a>
     <h1>Privacy & Security</h1>
-    <p class="subtitle">Last updated: November 23, 2026</p>
+    <p class="subtitle">Last updated: November 25, 2026</p>
 
     <div class="highlight">
       🔒 <strong>Your files stay on your device.</strong> PDF, image and text processing runs in your browser. We do not upload the content of your documents to our servers.
@@ -61,15 +61,16 @@
       <p>Like almost every website, the hosting provider (GitHub Pages) can see standard request metadata: IP address, user agent, which pages were requested and when. This is independent of the file processing that happens in the browser.</p>
       <p>We currently do not use advertising trackers or heavy analytics scripts that would send page content elsewhere.</p>
 
-      <h2>Libraries loaded from CDNs</h2>
-      <p>Some tools load open-source libraries from public CDNs (for example Cloudflare / cdnjs). These libraries execute in your browser. Examples:</p>
+      <h2>Libraries</h2>
+      <p>All processing libraries are hosted locally within this repository under the <code>vendor/</code> folder. No third-party CDN is required to load the tools. Your files are processed directly in your browser and are not uploaded to our servers.</p>
       <ul>
         <li>pdf-lib — PDF creation and modification</li>
         <li>PDF.js — rendering PDF pages to canvas</li>
         <li>JSZip — building ZIP archives for batch downloads</li>
-        <li>QR code libraries — drawing QR codes</li>
+        <li>jsPDF — creating PDFs from images</li>
+        <li>QR code library — drawing QR codes (bundled into the page)</li>
       </ul>
-      <p>They do not receive your files over the network as part of the tool’s normal operation; they operate on data already in the page’s memory.</p>
+      <p>The site itself is served by GitHub Pages infrastructure (standard page requests). That is separate from tool processing: document and image content is not uploaded for conversion or compression.</p>
 
       <h2>Local storage</h2>
       <p>A few features (for example “Recently used” on the homepage) may store small pieces of data in <code>localStorage</code> on your device. You can clear this at any time in your browser settings. This data does not leave your device.</p>
