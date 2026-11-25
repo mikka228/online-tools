@@ -394,7 +394,7 @@
       downloadBtn.disabled = true;
       downloadBtn.textContent = 'Creating PDF...';
       try {
-        const srcDoc = await PDFDocument.load(originalBytes.slice(0));
+        const srcDoc = await PDFDocument.load(originalBytes.slice(0), { ignoreEncryption: true });
         const newDoc = await PDFDocument.create();
 
         for (const p of pages) {
